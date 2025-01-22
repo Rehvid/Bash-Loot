@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Sword_Idle_0
+      name: Player_Idle_Sword_0
       rect:
         serializedVersion: 2
         x: 57
@@ -119,7 +119,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_1
+      name: Player_Idle_Sword_1
       rect:
         serializedVersion: 2
         x: 202
@@ -141,7 +141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_2
+      name: Player_Idle_Sword_2
       rect:
         serializedVersion: 2
         x: 346
@@ -163,7 +163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_3
+      name: Player_Idle_Sword_3
       rect:
         serializedVersion: 2
         x: 489
@@ -185,7 +185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_4
+      name: Player_Idle_Sword_4
       rect:
         serializedVersion: 2
         x: 633
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_5
+      name: Player_Idle_Sword_5
       rect:
         serializedVersion: 2
         x: 777
@@ -229,7 +229,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_6
+      name: Player_Idle_Sword_6
       rect:
         serializedVersion: 2
         x: 922
@@ -251,11 +251,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fire_Warrior_FireSwordIdle_7
+      name: Player_Idle_Sword_7
       rect:
         serializedVersion: 2
         x: 1066
-        y: 16
+        y: 17
         width: 27
         height: 47
       alignment: 0
@@ -286,14 +286,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Fire_Warrior_FireSwordIdle_1: 1353384096
-      Fire_Warrior_FireSwordIdle_2: 1591589642
-      Fire_Warrior_FireSwordIdle_3: 1524821051
-      Fire_Warrior_FireSwordIdle_4: -1788208543
-      Fire_Warrior_FireSwordIdle_5: -888186019
-      Fire_Warrior_FireSwordIdle_6: -2128113818
-      Fire_Warrior_FireSwordIdle_7: -1179339453
-      Player_Sword_Idle_0: 1512371007
+      Player_Idle_Sword_0: 1512371007
+      Player_Idle_Sword_1: 1353384096
+      Player_Idle_Sword_2: 1591589642
+      Player_Idle_Sword_3: 1524821051
+      Player_Idle_Sword_4: -1788208543
+      Player_Idle_Sword_5: -888186019
+      Player_Idle_Sword_6: -2128113818
+      Player_Idle_Sword_7: -1179339453
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
