@@ -2,6 +2,7 @@ namespace RehvidGames.Player
 {
     using UnityEngine;
     using UnityEngine.InputSystem;
+    using Utilities;
 
     public class PlayerMovementController : MonoBehaviour
     {
@@ -54,7 +55,7 @@ namespace RehvidGames.Player
                 ApplyFallingForce();
             }
             
-            animator.SetFloat("yVelocity", rb.linearVelocity.y);
+            animator.SetFloat(AnimatorParameter.YVelocity, rb.linearVelocity.y);
         }
 
         private bool CanApplyMovement() => onGround && !isJumping;
@@ -71,7 +72,7 @@ namespace RehvidGames.Player
                 characterSprite.flipX = inputMovement.x < 0;
             }
             
-            animator.SetFloat("xVelocity", rb.linearVelocity.magnitude);
+            animator.SetFloat(AnimatorParameter.XVelocity, rb.linearVelocity.magnitude);
         }
         
         private void ApplyFallingForce() => rb.AddForce(Vector3.down * fallSpeedMultiplier, ForceMode.Acceleration);
@@ -81,33 +82,25 @@ namespace RehvidGames.Player
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
             onGround = false;
-            animator.SetTrigger("isJumping");
+            animator.SetTrigger(AnimatorParameter.IsJumping);
         }
          
         public void OnMove(InputAction.CallbackContext context) => inputMovement = context.ReadValue<Vector2>();
         
         public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
 
-        private void OnCollisionEnter(Collision other)
-        {
-            UpdateGroundState(other, true);
-            animator.SetBool("onGround", true);
-        }
-
-        private void OnCollisionExit(Collision other)
-        {
-            UpdateGroundState(other, false);
-            animator.SetBool("onGround", false);
-        }
-
+        private void OnCollisionEnter(Collision other) => UpdateGroundState(other, true);
+        
+        private void OnCollisionExit(Collision other) => UpdateGroundState(other, false);
+        
         private void UpdateGroundState(Collision collision, bool state)
         {
-            if (IsCollidingWithGround(collision))
-            {
-                onGround = state;
-            }
+            if (!IsCollidingWithGround(collision)) return;
+            
+            onGround = state;
+            animator.SetBool(AnimatorParameter.OnGround, state);
         }
-
+        
         private bool IsCollidingWithGround(Collision collision) => ((1 << collision.gameObject.layer) & groundLayer) != 0; 
     }
 }
