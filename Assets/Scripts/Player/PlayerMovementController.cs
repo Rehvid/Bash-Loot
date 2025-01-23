@@ -20,7 +20,6 @@ namespace RehvidGames.Player
         private bool isJumping;
         private bool onGround;
         
-
         private void Start()
         { 
             InitializeOnGround();
@@ -54,6 +53,8 @@ namespace RehvidGames.Player
             {
                 ApplyFallingForce();
             }
+            
+            animator.SetFloat("yVelocity", rb.linearVelocity.y);
         }
 
         private bool CanApplyMovement() => onGround && !isJumping;
@@ -80,15 +81,24 @@ namespace RehvidGames.Player
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
             onGround = false;
+            animator.SetTrigger("isJumping");
         }
          
         public void OnMove(InputAction.CallbackContext context) => inputMovement = context.ReadValue<Vector2>();
         
         public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
 
-        private void OnCollisionEnter(Collision other) => UpdateGroundState(other, true);
+        private void OnCollisionEnter(Collision other)
+        {
+            UpdateGroundState(other, true);
+            animator.SetBool("onGround", true);
+        }
 
-        private void OnCollisionExit(Collision other) => UpdateGroundState(other, false);
+        private void OnCollisionExit(Collision other)
+        {
+            UpdateGroundState(other, false);
+            animator.SetBool("onGround", false);
+        }
 
         private void UpdateGroundState(Collision collision, bool state)
         {
