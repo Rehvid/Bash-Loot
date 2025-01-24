@@ -9,6 +9,7 @@
             public static readonly int YVelocity = Animator.StringToHash("yVelocity");
             public static readonly int OnGround = Animator.StringToHash("onGround");
             public static readonly int IsJumping = Animator.StringToHash("isJumping");
+            public static readonly int Dash = Animator.StringToHash("dash");
         #endregion
     }
 }

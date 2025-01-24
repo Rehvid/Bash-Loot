@@ -14,6 +14,7 @@ namespace RehvidGames.Player
         [Header("Properties")] 
         [SerializeField] private float speed = 5f;
         [SerializeField] private float jumpForce = 5f;
+        [SerializeField] private float dashForce = 20f;
         [SerializeField] private float fallSpeedMultiplier = 3f;
         [SerializeField] private LayerMask groundLayer;
         
@@ -75,12 +76,11 @@ namespace RehvidGames.Player
             animator.SetFloat(AnimatorParameter.XVelocity, rb.linearVelocity.magnitude);
         }
         
-        private void ApplyFallingForce() => rb.AddForce(Vector3.down * fallSpeedMultiplier, ForceMode.Acceleration);
-        
+        private void ApplyFallingForce() => AddForceToRigidBody(Vector3.down * fallSpeedMultiplier, ForceMode.Acceleration);
         
         private void PerformJump()
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+            AddForceToRigidBody(Vector3.up * jumpForce, ForceMode.Impulse); 
             onGround = false;
             animator.SetTrigger(AnimatorParameter.IsJumping);
         }
@@ -89,6 +89,23 @@ namespace RehvidGames.Player
         
         public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
 
+        public void OnDash(InputAction.CallbackContext context)
+        {
+            if (!context.performed || !onGround) return;
+            
+            float linearVelocityMagnitude = rb.linearVelocity.magnitude;
+            Vector3 force = rb.linearVelocity;
+            if (linearVelocityMagnitude == 0)
+            {
+                force = new Vector3(characterSprite.flipX ? -1f : 1f, 0f, 0f);
+            }
+            
+            AddForceToRigidBody(force * dashForce, ForceMode.Impulse);
+            animator.SetTrigger(AnimatorParameter.Dash);
+        }
+
+        private void AddForceToRigidBody(Vector3 force, ForceMode mode) => rb.AddForce(force, mode);
+        
         private void OnCollisionEnter(Collision other) => UpdateGroundState(other, true);
         
         private void OnCollisionExit(Collision other) => UpdateGroundState(other, false);
