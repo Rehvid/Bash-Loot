@@ -6,20 +6,15 @@
 
     public class PlayerCombat : MonoBehaviour
     {
+        [Header("Components")]
+        [SerializeField] private Animator animator;
+        [SerializeField] private Player player;
+        
+        [Header("Properties")]
         [SerializeField] private float idleRollForce = 12.5f;
         
-        private Animator animator;
-        private Rigidbody rb;
-        private SpriteRenderer spriteRenderer;
         private bool isBlockHolding;
-
-        private void Start()
-        {
-            TryGetComponent(out animator);
-            TryGetComponent(out rb);
-            TryGetComponent(out spriteRenderer);
-        }
-
+        
         public void OnAttack(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -31,9 +26,9 @@
         {
             if (!context.performed) return;
             
-            if (rb.linearVelocity.normalized.magnitude == 0)
+            if (player.IsStationary())
             {  
-                rb.AddForce(new Vector3(spriteRenderer.flipX ? -1f : 1f, 0f, 0f) * idleRollForce, ForceMode.Impulse);   
+                player.AddForceToRigidBody(player.GetIdleDirection() * idleRollForce, ForceMode.Impulse);
             }
             
             animator.SetTrigger(CombatAnimatorParameters.Roll);
