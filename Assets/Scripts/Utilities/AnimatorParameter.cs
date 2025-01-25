@@ -12,4 +12,9 @@
             public static readonly int Dash = Animator.StringToHash("dash");
         #endregion
     }
+
+    public static class CombatAnimatorParameters
+    {
+        public static readonly int Attack = Animator.StringToHash("attack");
+    }
 }
