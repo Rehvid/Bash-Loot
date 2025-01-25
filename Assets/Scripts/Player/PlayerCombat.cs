@@ -1,12 +1,13 @@
 ﻿namespace RehvidGames.Player
 {
+    using Animator;
     using UnityEngine;
     using UnityEngine.InputSystem;
-    using Utilities;
 
     public class PlayerCombat : MonoBehaviour
     {
         private Animator animator;
+        private bool isBlockHolding;
 
         private void Start()
         {
@@ -29,7 +30,21 @@
 
         public void OnBlock(InputAction.CallbackContext context)
         {
-            animator.SetBool(CombatAnimatorParameters.isBlocking, context.performed);
+            isBlockHolding = context.performed;
+            if (context.performed)
+            {
+                animator.SetTrigger(CombatAnimatorParameters.Block);
+            } else if (context.canceled)
+            {
+                animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, false);
+            }
+        }
+
+        public void OnBlockIdle()
+        {
+            if (!isBlockHolding) return;
+            
+            animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, true); 
         }
     }
 }

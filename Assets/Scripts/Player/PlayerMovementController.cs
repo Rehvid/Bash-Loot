@@ -3,6 +3,7 @@ namespace RehvidGames.Player
     using UnityEngine;
     using UnityEngine.InputSystem;
     using Utilities;
+    using Animator;
 
     public class PlayerMovementController : MonoBehaviour
     {
@@ -64,7 +65,7 @@ namespace RehvidGames.Player
         private void PerformJump()
         {
             AddForceToRigidBody(Vector3.up * jumpForce, ForceMode.Impulse); 
-            animator.SetTrigger(MovementAnimatorParameters.IsJumping);
+            animator.SetTrigger(MovementAnimatorParameters.Jump);
         }
          
         public void OnGroundChange(bool state)
