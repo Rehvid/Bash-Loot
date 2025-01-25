@@ -805,16 +805,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2014854789}
+  - component: {fileID: 2014854800}
   - component: {fileID: 2014854790}
+  - component: {fileID: 2014854797}
+  - component: {fileID: 2014854796}
+  - component: {fileID: 2014854799}
+  - component: {fileID: 2014854798}
   - component: {fileID: 2014854792}
   - component: {fileID: 2014854791}
   - component: {fileID: 2014854794}
   - component: {fileID: 2014854795}
-  - component: {fileID: 2014854796}
-  - component: {fileID: 2014854797}
-  - component: {fileID: 2014854800}
-  - component: {fileID: 2014854799}
-  - component: {fileID: 2014854798}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
