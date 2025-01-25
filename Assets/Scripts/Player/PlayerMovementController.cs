@@ -39,7 +39,7 @@ namespace RehvidGames.Player
                 ApplyFallingForce();
             }
             
-            animator.SetFloat(AnimatorParameter.YVelocity, rb.linearVelocity.y);
+            animator.SetFloat(MovementAnimatorParameters.YVelocity, rb.linearVelocity.y);
         }
 
         private bool CanApplyMovement() => onGround && !isJumping;
@@ -56,7 +56,7 @@ namespace RehvidGames.Player
                 characterSprite.flipX = inputMovement.x < 0;
             }
             
-            animator.SetFloat(AnimatorParameter.XVelocity, rb.linearVelocity.magnitude);
+            animator.SetFloat(MovementAnimatorParameters.XVelocity, rb.linearVelocity.magnitude);
         }
         
         private void ApplyFallingForce() => AddForceToRigidBody(Vector3.down * fallSpeedMultiplier, ForceMode.Acceleration);
@@ -64,7 +64,7 @@ namespace RehvidGames.Player
         private void PerformJump()
         {
             AddForceToRigidBody(Vector3.up * jumpForce, ForceMode.Impulse); 
-            animator.SetTrigger(AnimatorParameter.IsJumping);
+            animator.SetTrigger(MovementAnimatorParameters.IsJumping);
         }
          
         public void OnGroundChange(bool state)
@@ -72,7 +72,7 @@ namespace RehvidGames.Player
             if (onGround == state) return;
             
             onGround = state;
-            animator.SetBool(AnimatorParameter.OnGround, state);
+            animator.SetBool(MovementAnimatorParameters.OnGround, state);
         }
         
         public void OnMove(InputAction.CallbackContext context) => inputMovement = context.ReadValue<Vector2>();
@@ -91,7 +91,7 @@ namespace RehvidGames.Player
             }
             
             AddForceToRigidBody(force * dashForce, ForceMode.Impulse);
-            animator.SetTrigger(AnimatorParameter.Dash);
+            animator.SetTrigger(MovementAnimatorParameters.Dash);
         }
         
         private void AddForceToRigidBody(Vector3 force, ForceMode mode) => rb.AddForce(force, mode);
