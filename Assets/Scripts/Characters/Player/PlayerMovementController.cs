@@ -1,9 +1,9 @@
-namespace RehvidGames.Player
+namespace RehvidGames.Characters.Player
 {
+    using Animator;
+    using Utilities;
     using UnityEngine;
     using UnityEngine.InputSystem;
-    using Utilities;
-    using Animator;
 
     public class PlayerMovementController : MonoBehaviour
     {

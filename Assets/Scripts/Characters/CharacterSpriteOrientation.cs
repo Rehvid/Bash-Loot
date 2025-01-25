@@ -1,4 +1,4 @@
-﻿namespace RehvidGames.Character
+﻿namespace RehvidGames.Characters
 {
     using UnityEngine;
 

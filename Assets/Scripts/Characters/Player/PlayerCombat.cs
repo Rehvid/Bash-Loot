@@ -1,4 +1,4 @@
-﻿namespace RehvidGames.Player
+﻿namespace RehvidGames.Characters.Player
 {
     using Animator;
     using UnityEngine;

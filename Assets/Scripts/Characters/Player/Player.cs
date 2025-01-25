@@ -1,6 +1,6 @@
-﻿namespace RehvidGames.Player
+﻿namespace RehvidGames.Characters.Player
 {
-    using Character;
+    using Characters;
     using UnityEngine;
 
     public class Player : MonoBehaviour
