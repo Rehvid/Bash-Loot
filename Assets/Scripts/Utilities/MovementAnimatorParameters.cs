@@ -14,5 +14,7 @@
     public static class CombatAnimatorParameters
     {
         public static readonly int Attack = Animator.StringToHash("attack");
+        public static readonly int isBlocking = Animator.StringToHash("isBlocking");
+        public static readonly int Roll = Animator.StringToHash("roll");
     }
 }
