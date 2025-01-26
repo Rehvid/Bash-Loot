@@ -1,6 +1,7 @@
 ﻿namespace RehvidGames.Characters.Player
 {
     using Animator;
+    using Enums;
     using UnityEngine;
     using UnityEngine.InputSystem;
 
@@ -10,47 +11,43 @@
         [SerializeField] private Animator animator;
         [SerializeField] private Player player;
         
-        [Header("Properties")]
-        [SerializeField] private float idleRollForce = 12.5f;
-        
-        private bool isBlockHolding;
-        
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (!context.performed) return;
-            
-            animator.SetTrigger(CombatAnimatorParameters.Attack);
+            if (context.performed)
+            {
+                player.StateMachine.SwitchState(PlayerState.Attack);
+            }
         }
+
+        public void OnAttackEnd() => player.StateMachine.SwitchState(PlayerState.Idle);
         
         public void OnRoll(InputAction.CallbackContext context)
         {
-            if (!context.performed) return;
-            
-            if (player.IsStationary())
-            {  
-                player.AddForceToRigidBody(player.GetIdleDirection() * idleRollForce, ForceMode.Impulse);
-            }
-            
-            animator.SetTrigger(CombatAnimatorParameters.Roll);
+            if (context.performed)
+            {
+                player.StateMachine.SwitchState(PlayerState.Roll);
+            } 
         }
+        
+        public void OnRollEnd() => player.StateMachine.SwitchState(PlayerState.Idle);
 
         public void OnBlock(InputAction.CallbackContext context)
         {
-            isBlockHolding = context.performed;
             if (context.performed)
             {
-                animator.SetTrigger(CombatAnimatorParameters.Block);
+                player.StateMachine.SwitchState(PlayerState.Block);
             } else if (context.canceled)
             {
-                animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, false);
+                player.StateMachine.SwitchState(PlayerState.Idle); 
             }
         }
 
         public void OnBlockIdle()
         {
-            if (!isBlockHolding) return;
-            
-            animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, true); 
+            if (player.StateMachine.IsInState(PlayerState.Block))
+            {
+                animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, true); 
+            }
         }
     }
 }

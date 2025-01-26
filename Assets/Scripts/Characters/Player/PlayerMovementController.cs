@@ -1,6 +1,8 @@
 namespace RehvidGames.Characters.Player
 {
     using Animator;
+    using Contexts;
+    using Enums;
     using Utilities;
     using UnityEngine;
     using UnityEngine.InputSystem;
@@ -12,15 +14,10 @@ namespace RehvidGames.Characters.Player
         [SerializeField] private Player player;
         [SerializeField] private Animator animator;
         
-        [Header("Properties")] 
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float jumpForce = 5f;
-        [SerializeField] private float dashForce = 20f;
-        [SerializeField] private float fallSpeedMultiplier = 3f;
-        
-        private Vector2 inputMovement;
         private bool isJumping;
         private bool onGround;
+
+        private readonly PlayerWalkContext walkContext = new ();
         
         private void FixedUpdate()
         {
@@ -31,12 +28,7 @@ namespace RehvidGames.Characters.Player
             
             if (CanPerformJump())
             {
-                PerformJump();
-            }
-
-            if (CanApplyFallingForce())
-            {
-                ApplyFallingForce();
+                player.StateMachine.SwitchState(PlayerState.Jump);
             }
             
             animator.SetFloat(MovementAnimatorParameters.YVelocity, player.RigidBodyVelocity.y);
@@ -45,37 +37,30 @@ namespace RehvidGames.Characters.Player
         private bool CanApplyMovement() => onGround && !isJumping;
 
         private bool CanPerformJump() => isJumping && onGround;
-
-        private bool CanApplyFallingForce() => player.RigidBodyVelocity.y < 0;
         
         private void ApplyMovement()
         {
-            player.SetRigidBodyVelocity(new Vector3(inputMovement.x, 0, inputMovement.y) * speed);
-            if (!Mathf.Approximately(inputMovement.x, 0))
+            if (!player.StateMachine.IsInState(PlayerState.Walk))
             {
-                player.FlipSpriteRenderHorizontally(inputMovement.x < 0);
+                player.StateMachine.SwitchState(PlayerState.Walk);
             }
-            
-            animator.SetFloat(MovementAnimatorParameters.XVelocity, player.RigidBodyVelocity.magnitude);
+            player.StateMachine.AddContextToState(walkContext);
         }
         
-        private void ApplyFallingForce() => player.AddForceToRigidBody(Vector3.down * fallSpeedMultiplier, ForceMode.Acceleration);
-        
-        private void PerformJump()
-        {
-            player.AddForceToRigidBody(Vector3.up * jumpForce, ForceMode.Impulse); 
-            animator.SetTrigger(MovementAnimatorParameters.Jump);
-        }
-         
         public void OnGroundChange(bool state)
         {
             if (onGround == state) return;
             
             onGround = state;
             animator.SetBool(MovementAnimatorParameters.OnGround, state);
+            
+            if (player.StateMachine.IsInState(PlayerState.Jump) && state)
+            {
+                player.StateMachine.SwitchState(PlayerState.Idle);
+            }
         }
-        
-        public void OnMove(InputAction.CallbackContext context) => inputMovement = context.ReadValue<Vector2>();
+
+        public void OnMove(InputAction.CallbackContext context) => walkContext.InputMovement = context.ReadValue<Vector2>();
         
         public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
 
@@ -83,10 +68,9 @@ namespace RehvidGames.Characters.Player
         {
             if (!context.performed || !onGround) return;
             
-            Vector3 force = player.IsStationary() ? player.GetIdleDirection() : player.RigidBodyVelocity;
-            
-            player.AddForceToRigidBody(force * dashForce, ForceMode.Impulse);
-            animator.SetTrigger(MovementAnimatorParameters.Dash);
+            player.StateMachine.SwitchState(PlayerState.Dash);
         }
+
+        public void OnDashEnd() => player.StateMachine.SwitchState(PlayerState.Idle);
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace RehvidGames.Characters.Player
 {
     using Characters;
+    using States;
     using UnityEngine;
 
     public class Player : MonoBehaviour
@@ -8,7 +9,8 @@
         [Header("Components")]
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
         [SerializeField] private CharacterPhysicsController physicsController;
-
+        [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
+        
         public Vector3 RigidBodyVelocity => physicsController.LinearVelocity;
         
         public void FlipSpriteRenderHorizontally(bool flip) => spriteOrientation.FlipHorizontally(flip);
