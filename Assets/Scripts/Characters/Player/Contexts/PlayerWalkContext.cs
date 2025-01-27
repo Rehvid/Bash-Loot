@@ -6,5 +6,7 @@
     public class PlayerWalkContext: IContext
     {
         public Vector2 InputMovement { get; set; }
+
+        public bool IsInputMovement() => InputMovement.sqrMagnitude > 0.01f;
     }
 }

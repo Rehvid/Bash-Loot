@@ -16,14 +16,12 @@ namespace RehvidGames.Characters.Player
         
         private bool isJumping;
         private bool onGround;
-
-        private readonly PlayerWalkContext walkContext = new ();
         
         private void FixedUpdate()
         {
             if (CanApplyMovement()) 
             {
-                ApplyMovement();
+                player.StateMachine.SwitchState(PlayerState.Walk);
             }
             
             if (CanPerformJump())
@@ -34,18 +32,11 @@ namespace RehvidGames.Characters.Player
             animator.SetFloat(MovementAnimatorParameters.YVelocity, player.RigidBodyVelocity.y);
         }
 
-        private bool CanApplyMovement() => onGround && !isJumping;
-
-        private bool CanPerformJump() => isJumping && onGround;
+        private bool CanApplyMovement() => 
+            (onGround && !isJumping) 
+            && (player.StateMachine.IsInState(PlayerState.Idle) && player.WalkContext.IsInputMovement());
         
-        private void ApplyMovement()
-        {
-            if (!player.StateMachine.IsInState(PlayerState.Walk))
-            {
-                player.StateMachine.SwitchState(PlayerState.Walk);
-            }
-            player.StateMachine.AddContextToState(walkContext);
-        }
+        private bool CanPerformJump() => isJumping && onGround;
         
         public void OnGroundChange(bool state)
         {
@@ -60,7 +51,7 @@ namespace RehvidGames.Characters.Player
             }
         }
 
-        public void OnMove(InputAction.CallbackContext context) => walkContext.InputMovement = context.ReadValue<Vector2>();
+        public void OnMove(InputAction.CallbackContext context) => player.WalkContext.InputMovement = context.ReadValue<Vector2>();
         
         public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
 

@@ -1,10 +1,8 @@
 ﻿namespace RehvidGames.Characters.Player.States
 {
     using Animator;
-    using Contexts;
     using Enums;
     using RehvidGames.States;
-    using RehvidGames.States.Interfaces;
     using UnityEngine;
 
     public class PlayerWalkState: BaseState<PlayerState>
@@ -13,7 +11,6 @@
         private readonly Animator animator;
         private readonly float speed;
         
-        private Vector2 inputMovement;
         
         public PlayerWalkState(Animator animator, Player player, float speed) : base(PlayerState.Walk)
         {
@@ -24,22 +21,17 @@
         
         public override void PhysicsUpdate()
         {
+            Vector2 inputMovement = player.WalkContext.InputMovement; 
+             
             player.SetRigidBodyVelocity(new Vector3(inputMovement.x, 0, inputMovement.y) * speed);
-            
-            if (!Mathf.Approximately(inputMovement.x, 0))
-            {
-                player.FlipSpriteRenderHorizontally(inputMovement.x < 0);
-            }
+            player.TryFlipSpriteRenderHorizontally();
             
             animator.SetFloat(MovementAnimatorParameters.XVelocity, player.RigidBodyVelocity.magnitude);
         }
 
-        public override void InputContext(IContext context)
+        public override void ExitState()
         {
-            if (context is PlayerWalkContext walkContext)
-            {
-                inputMovement = walkContext.InputMovement;
-            }
+            animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
         }
     }
 }

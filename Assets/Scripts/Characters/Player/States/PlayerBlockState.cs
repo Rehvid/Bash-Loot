@@ -8,9 +8,11 @@
     public class PlayerBlockState: BaseState<PlayerState>
     {
         private readonly Animator animator;
+        private readonly Player player;
         
-        public PlayerBlockState(Animator animator) : base(PlayerState.Block)
+        public PlayerBlockState(Animator animator, Player player) : base(PlayerState.Block)
         {
+            this.player = player;
             this.animator = animator;
         }
 
@@ -18,7 +20,12 @@
         {
            animator.SetTrigger(CombatAnimatorParameters.Block);
         }
-        
+
+        public override void PhysicsUpdate()
+        {
+            player.TryFlipSpriteRenderHorizontally();
+        }
+
         public override void ExitState()
         {
             animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, false);

@@ -10,19 +10,27 @@
         private readonly Animator animator;
         private readonly Player player;
         private readonly float dashForce;
+        private readonly float idleDashForce;
         
-        public PlayerDashState(Animator animator, Player player, float dashForce) : base(PlayerState.Dash)
+        public PlayerDashState(Animator animator, Player player, float dashForce, float idleDashForce) : base(PlayerState.Dash)
         {
             this.animator = animator;
             this.player = player;
             this.dashForce = dashForce;
+            this.idleDashForce = idleDashForce;
         }
 
         public override void EnterState()
         {
-            Vector3 force = player.IsStationary() ? player.GetIdleDirection() : player.RigidBodyVelocity;
+            if (player.IsStationary())
+            {
+                player.AddForceToRigidBody(player.GetIdleDirection() * idleDashForce, ForceMode.Impulse);
+            }
+            else
+            {
+                player.AddForceToRigidBody(player.RigidBodyVelocity * dashForce, ForceMode.Acceleration);
+            }
             
-            player.AddForceToRigidBody(force * dashForce, ForceMode.Impulse);
             animator.SetTrigger(MovementAnimatorParameters.Dash);
         }
     }

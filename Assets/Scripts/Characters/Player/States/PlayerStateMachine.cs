@@ -13,13 +13,13 @@
         
         private void Awake()
         {
-            states.Add(PlayerState.Block, new PlayerBlockState(animator));
             states.Add(PlayerState.Idle, new PlayerIdleState());
-            states.Add(PlayerState.Roll, new PlayerRollState(animator, player, movementData.IdleRollForce));
-            states.Add(PlayerState.Attack, new PlayerAttackState(animator));
-            states.Add(PlayerState.Dash, new PlayerDashState(animator, player, movementData.DashForce));
-            states.Add(PlayerState.Jump, new PlayerJumpState(animator, player, movementData.JumpForce, movementData.FallSpeedMultiplier));
             states.Add(PlayerState.Walk, new PlayerWalkState(animator, player, movementData.Speed));
+            states.Add(PlayerState.Roll, new PlayerRollState(animator, player, movementData.RollIdleForce, movementData.RollForce));
+            states.Add(PlayerState.Attack, new PlayerAttackState(animator));
+            states.Add(PlayerState.Dash, new PlayerDashState(animator, player, movementData.DashForce, movementData.DashIdleForce));
+            states.Add(PlayerState.Jump, new PlayerJumpState(animator, player, movementData.JumpForce, movementData.FallSpeedMultiplier));
+            states.Add(PlayerState.Block, new PlayerBlockState(animator, player));
             
             currentState = states[PlayerState.Idle];
         }
