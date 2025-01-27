@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Interfaces;
     using UnityEngine;
 
     public class StateMachine<EState> : MonoBehaviour where EState : Enum
@@ -33,8 +32,6 @@
 
         public bool IsInState(EState stateKey) => currentState.StateKey.Equals(stateKey);
         
-        public void AddContextToState(IContext context) => currentState.InputContext(context);
-        
         protected void StateTransition(EState stateKey)
         {
             isInTransitionState = true;
@@ -44,6 +41,14 @@
             currentState.EnterState();
             
             isInTransitionState = false;
+        }
+        
+        protected void ResetToStateIfInState(EState current, EState target)
+        {
+            if (IsInState(current))
+            {
+                StateTransition(target);
+            }
         }
     }
 }

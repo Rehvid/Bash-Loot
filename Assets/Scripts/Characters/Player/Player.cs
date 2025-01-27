@@ -1,9 +1,6 @@
 ﻿namespace RehvidGames.Characters.Player
 {
-    using System;
     using Characters;
-    using Contexts;
-    using RehvidGames.States.Interfaces;
     using States;
     using UnityEngine;
 
@@ -13,14 +10,17 @@
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
         [SerializeField] private CharacterPhysicsController physicsController;
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
+        [field: SerializeField] public Animator Animator { get; private set; }
         
-        public PlayerWalkContext WalkContext { get; } = new ();
+        
+        public Vector2 InputMovement { get; set; }
         
         public Vector3 RigidBodyVelocity => physicsController.LinearVelocity;
         
+        public bool IsInputMovement() => InputMovement.sqrMagnitude > 0.01f;
         
         #region Sprite Orientation
-        public void TryFlipSpriteRenderHorizontally() => spriteOrientation.UpdateSpriteDirection(WalkContext.InputMovement);
+        public void TryUpdateSpriteDirectionHorizontally() => spriteOrientation.UpdateSpriteDirection(InputMovement);
         
         public Vector3 GetIdleDirection() => new(spriteOrientation.IsFlippedHorizontally() ? -1f : 1f, 0f, 0f);
         

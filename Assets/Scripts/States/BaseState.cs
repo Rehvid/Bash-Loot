@@ -19,7 +19,5 @@
         public virtual void FrameUpdate() {}
         
         public virtual void PhysicsUpdate() {}
-
-        public virtual void InputContext(IContext context) {}
     }
 }

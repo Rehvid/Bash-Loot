@@ -7,19 +7,18 @@
     public class PlayerStateMachine: StateMachine<PlayerState>
     {
         [Header("Components")]
-        [SerializeField] private Animator animator;
         [SerializeField] private Player player;
         [SerializeField] private PlayerMovementData movementData;
         
         private void Awake()
         {
             states.Add(PlayerState.Idle, new PlayerIdleState());
-            states.Add(PlayerState.Walk, new PlayerWalkState(animator, player, movementData.Speed));
-            states.Add(PlayerState.Roll, new PlayerRollState(animator, player, movementData.RollIdleForce, movementData.RollForce));
-            states.Add(PlayerState.Attack, new PlayerAttackState(animator, player));
-            states.Add(PlayerState.Dash, new PlayerDashState(animator, player, movementData.DashForce, movementData.DashIdleForce));
-            states.Add(PlayerState.Jump, new PlayerJumpState(animator, player, movementData.JumpForce, movementData.FallSpeedMultiplier));
-            states.Add(PlayerState.Block, new PlayerBlockState(animator, player));
+            states.Add(PlayerState.Walk, new PlayerWalkState(player, movementData.Speed));
+            states.Add(PlayerState.Roll, new PlayerRollState(player, movementData.RollIdleForce, movementData.RollForce));
+            states.Add(PlayerState.Attack, new PlayerAttackState(player));
+            states.Add(PlayerState.Dash, new PlayerDashState(player, movementData.DashForce, movementData.DashIdleForce));
+            states.Add(PlayerState.Jump, new PlayerJumpState(player, movementData.JumpForce, movementData.FallSpeedMultiplier));
+            states.Add(PlayerState.Block, new PlayerBlockState(player));
             
             currentState = states[PlayerState.Idle];
         }
@@ -28,5 +27,8 @@
         {
             StateTransition(newState);
         }
+
+        public void ResetToIdleIfInState(PlayerState stateToEnd) => 
+            ResetToStateIfInState(stateToEnd, PlayerState.Idle);
     }
 }

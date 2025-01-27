@@ -7,14 +7,12 @@
 
     public class PlayerRollState: BaseState<PlayerState>
     {
-        private readonly Animator animator;
         private readonly Player player;
         private readonly float idleRollForce;
         private readonly float rollForce;
         
-        public PlayerRollState(Animator animator, Player player, float idleRollForce, float rollForce) : base(PlayerState.Roll)
+        public PlayerRollState(Player player, float idleRollForce, float rollForce) : base(PlayerState.Roll)
         {
-            this.animator = animator;
             this.player = player;
             this.idleRollForce = idleRollForce;
             this.rollForce = rollForce;
@@ -22,7 +20,7 @@
         
         public override void EnterState()
         {
-            animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
             
             if (player.IsStationary())
             {  
@@ -33,7 +31,7 @@
                 player.AddForceToRigidBody(player.RigidBodyVelocity * rollForce, ForceMode.Acceleration);
             } 
             
-            animator.SetTrigger(CombatAnimatorParameters.Roll);
+            player.Animator.SetTrigger(CombatAnimatorParameters.Roll);
         }
         
     }

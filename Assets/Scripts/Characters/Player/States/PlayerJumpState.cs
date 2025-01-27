@@ -7,14 +7,12 @@
 
     public class PlayerJumpState: BaseState<PlayerState>
     {
-        private readonly Animator animator;
         private readonly Player player;
         private readonly float jumpForce;
         private readonly float fallSpeedMultiplier;
         
-        public PlayerJumpState(Animator animator, Player player, float jumpForce, float fallSpeedMultiplier) : base(PlayerState.Jump)
+        public PlayerJumpState(Player player, float jumpForce, float fallSpeedMultiplier) : base(PlayerState.Jump)
         {
-            this.animator = animator;
             this.player = player;
             this.jumpForce = jumpForce;
             this.fallSpeedMultiplier = fallSpeedMultiplier;
@@ -23,7 +21,7 @@
         public override void EnterState()
         {
             player.AddForceToRigidBody(Vector3.up * jumpForce, ForceMode.Impulse); 
-            animator.SetTrigger(MovementAnimatorParameters.Jump);
+            player.Animator.SetTrigger(MovementAnimatorParameters.Jump);
         }
         
         public override void PhysicsUpdate()

@@ -1,4 +1,4 @@
-﻿namespace RehvidGames.States
+﻿namespace RehvidGames.States.Interfaces
 {
     public interface IState
     {

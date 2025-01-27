@@ -853,7 +853,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundChecker: {fileID: 2014854796}
   player: {fileID: 2014854800}
-  animator: {fileID: 2014854794}
 --- !u!135 &2014854791
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1022,7 +1021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85cc3eb69d3c4de99be3bd04420f729c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2014854794}
   player: {fileID: 2014854800}
 --- !u!114 &2014854798
 MonoBehaviour:
@@ -1065,6 +1063,7 @@ MonoBehaviour:
   spriteOrientation: {fileID: 2014854798}
   physicsController: {fileID: 2014854799}
   <StateMachine>k__BackingField: {fileID: 2014854801}
+  <Animator>k__BackingField: {fileID: 2014854794}
 --- !u!114 &2014854801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,7 +1076,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b07432c1530424ebf24b20545c451cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2014854794}
   player: {fileID: 2014854800}
   movementData: {fileID: 11400000, guid: 2e64dd678c7632a49a040abe0ebc3069, type: 2}
 --- !u!1 &2030001848

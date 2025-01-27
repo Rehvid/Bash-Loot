@@ -1,7 +1,6 @@
 namespace RehvidGames.Characters.Player
 {
     using Animator;
-    using Contexts;
     using Enums;
     using Utilities;
     using UnityEngine;
@@ -12,7 +11,6 @@ namespace RehvidGames.Characters.Player
         [Header("Components")]
         [SerializeField] private GroundChecker groundChecker;
         [SerializeField] private Player player;
-        [SerializeField] private Animator animator;
         
         private bool isJumping;
         private bool onGround;
@@ -29,12 +27,12 @@ namespace RehvidGames.Characters.Player
                 player.StateMachine.SwitchState(PlayerState.Jump);
             }
             
-            animator.SetFloat(MovementAnimatorParameters.YVelocity, player.RigidBodyVelocity.y);
+            player.Animator.SetFloat(MovementAnimatorParameters.YVelocity, player.RigidBodyVelocity.y);
         }
 
-        private bool CanApplyMovement() => 
-            (onGround && !isJumping) 
-            && (player.StateMachine.IsInState(PlayerState.Idle) && player.WalkContext.IsInputMovement());
+        private bool CanApplyMovement() => (onGround && !isJumping) 
+            && player.StateMachine.IsInState(PlayerState.Idle) 
+            && player.IsInputMovement();
         
         private bool CanPerformJump() => isJumping && onGround;
         
@@ -43,7 +41,7 @@ namespace RehvidGames.Characters.Player
             if (onGround == state) return;
             
             onGround = state;
-            animator.SetBool(MovementAnimatorParameters.OnGround, state);
+            player.Animator.SetBool(MovementAnimatorParameters.OnGround, state);
             
             if (player.StateMachine.IsInState(PlayerState.Jump) && state)
             {
@@ -51,7 +49,7 @@ namespace RehvidGames.Characters.Player
             }
         }
 
-        public void OnMove(InputAction.CallbackContext context) => player.WalkContext.InputMovement = context.ReadValue<Vector2>();
+        public void OnMove(InputAction.CallbackContext context) => player.InputMovement = context.ReadValue<Vector2>();
         
         public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
 
@@ -62,10 +60,12 @@ namespace RehvidGames.Characters.Player
                 player.StateMachine.SwitchState(PlayerState.Dash);
             }
         }
-
-        private bool CanDash(InputAction.CallbackContext context) =>
-            context.performed && onGround && !player.StateMachine.IsInState(PlayerState.Jump);
         
-        public void OnDashEnd() => player.StateMachine.SwitchState(PlayerState.Idle);
+        public void OnDashEnd() => player.StateMachine.ResetToIdleIfInState(PlayerState.Dash);
+
+        private bool CanDash(InputAction.CallbackContext context) => context.performed 
+             && onGround 
+             && !player.StateMachine.IsInState(PlayerState.Jump);
+        
     }
 }
