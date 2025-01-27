@@ -19,7 +19,6 @@
 
         private void Update()
         {
-            Debug.Log($"stateMachine: {currentState.GetType().Name}");
             if (isInTransitionState) return;
             
             currentState.FrameUpdate();
@@ -27,7 +26,6 @@
 
         private void FixedUpdate()
         {
-            Debug.Log($"stateMachine FIXEDUPDATE: {currentState.GetType().Name}");
             if (isInTransitionState) return;
             
             currentState.PhysicsUpdate();

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1893d3bc83d64385a3a2c7ef6a014d28, type: 3}
   m_Name: PlayerMovementData
   m_EditorClassIdentifier: 
-  <DashForce>k__BackingField: 2
-  <IdleRollForce>k__BackingField: 3
+  <DashForce>k__BackingField: 8
+  <DashIdleForce>k__BackingField: 3
+  <RollIdleForce>k__BackingField: 3
+  <RollForce>k__BackingField: 8
   <Speed>k__BackingField: 5
   <JumpForce>k__BackingField: 5
   <FallSpeedMultiplier>k__BackingField: 3
