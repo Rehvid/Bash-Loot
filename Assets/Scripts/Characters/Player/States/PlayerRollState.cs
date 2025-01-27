@@ -22,6 +22,8 @@
         
         public override void EnterState()
         {
+            animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+            
             if (player.IsStationary())
             {  
                 player.AddForceToRigidBody( player.GetIdleDirection() * idleRollForce, ForceMode.Impulse);

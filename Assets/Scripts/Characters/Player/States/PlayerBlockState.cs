@@ -17,8 +17,11 @@
         }
 
         public override void EnterState()
-        {
-           animator.SetTrigger(CombatAnimatorParameters.Block);
+        { 
+            player.SetRigidBodyVelocity(Vector3.zero);
+            animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+            
+            animator.SetTrigger(CombatAnimatorParameters.Block);
         }
 
         public override void PhysicsUpdate()

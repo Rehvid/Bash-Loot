@@ -28,10 +28,5 @@
             
             animator.SetFloat(MovementAnimatorParameters.XVelocity, player.RigidBodyVelocity.magnitude);
         }
-
-        public override void ExitState()
-        {
-            animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
-        }
     }
 }

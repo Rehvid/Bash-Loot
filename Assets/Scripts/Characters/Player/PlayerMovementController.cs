@@ -57,11 +57,15 @@ namespace RehvidGames.Characters.Player
 
         public void OnDash(InputAction.CallbackContext context)
         {
-            if (!context.performed || !onGround) return;
-            
-            player.StateMachine.SwitchState(PlayerState.Dash);
+            if (CanDash(context))
+            {
+                player.StateMachine.SwitchState(PlayerState.Dash);
+            }
         }
 
+        private bool CanDash(InputAction.CallbackContext context) =>
+            context.performed && onGround && !player.StateMachine.IsInState(PlayerState.Jump);
+        
         public void OnDashEnd() => player.StateMachine.SwitchState(PlayerState.Idle);
     }
 }
