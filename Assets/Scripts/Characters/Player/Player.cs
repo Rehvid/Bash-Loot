@@ -27,6 +27,11 @@ namespace RehvidGames.Characters.Player
         
         #region Physics Controller
 
+        public void ApplyForwardMovement(float force) => Rigidbody().position += new Vector2(force * Time.fixedDeltaTime, 0);
+
+        public void ApplyStationaryForce(float force) =>
+            SetVelocity(new Vector2(GetIdleDirection() * force, RigidBodyVelocity().y));
+        
         public Rigidbody2D Rigidbody() => physicsController.rb;
         
         public float GravityScale() => physicsController.GravityScale;

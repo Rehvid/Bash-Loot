@@ -25,14 +25,22 @@
             
             if (player.IsStationary())
             {  
-                player.SetVelocity(new Vector2(player.GetIdleDirection()* idleRollForce , player.RigidBodyVelocity().y));
+                player.ApplyStationaryForce(idleRollForce);
             }
             else
             {
-                player.Rigidbody().position += new Vector2(rollForce * Time.fixedDeltaTime, 0);
+                player.ApplyForwardMovement(rollForce);
             } 
             
             player.Animator.SetTrigger(CombatAnimatorParameters.Roll);
+        }
+
+        public override void ExitState()
+        {
+            if (!player.IsStationary())
+            {
+                player.SetVelocity(new Vector2(0, 0));
+            }
         }
     }
 }

@@ -24,14 +24,22 @@
             
             if (player.IsStationary())
             { 
-                player.SetVelocity(new Vector2(player.GetIdleDirection()* idleDashForce , player.RigidBodyVelocity().y));
+                player.ApplyStationaryForce(idleDashForce);
             }
             else
             {
-                player.Rigidbody().position += new Vector2(dashForce * Time.fixedDeltaTime, 0);
+                player.ApplyForwardMovement(dashForce);
             }
             
             player.Animator.SetTrigger(MovementAnimatorParameters.Dash);
+        }
+
+        public override void ExitState()
+        {
+            if (!player.IsStationary())
+            {
+                player.SetVelocity(new Vector2(0, 0));
+            }
         }
     }
 }
