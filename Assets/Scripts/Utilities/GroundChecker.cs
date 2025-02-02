@@ -11,19 +11,17 @@
         [Header("Events")]
         [SerializeField] private UnityEvent<bool> groundCheck;
         
-        [Header("Debug")]
-        [SerializeField] private bool useDebug;
         
-        private void OnCollisionEnter(Collision other) => UpdateGroundState(other, true);
-        private void OnCollisionExit(Collision other) => UpdateGroundState(other, false);
+        private void OnCollisionEnter2D(Collision2D other) => UpdateGroundState(other, true);
+        private void OnCollisionExit2D(Collision2D other) => UpdateGroundState(other, false);
         
-        private void UpdateGroundState(Collision collision, bool state)
+        private void UpdateGroundState(Collision2D collision, bool state)
         {
             if (!IsCollidingWithGround(collision)) return;
             groundCheck?.Invoke(state);
         }
         
-        private bool IsCollidingWithGround(Collision collision) 
+        private bool IsCollidingWithGround(Collision2D collision) 
             => ((1 << collision.gameObject.layer) & groundLayer) != 0; 
     }
 }
