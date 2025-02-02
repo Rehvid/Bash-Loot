@@ -1,7 +1,9 @@
 ﻿namespace RehvidGames.Characters.Player.States
 {
+    using Animator;
     using Enums;
     using RehvidGames.States;
+    using UnityEngine;
 
     public class PlayerRollState: BaseState<PlayerState>
     {
@@ -16,5 +18,21 @@
             this.rollForce = rollForce;
         }
 
+        
+        public override void EnterState()
+        {
+            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+            
+            if (player.IsStationary())
+            {  
+                player.SetVelocity(new Vector2(player.GetIdleDirection()* idleRollForce , player.RigidBodyVelocity().y));
+            }
+            else
+            {
+                player.Rigidbody().position += new Vector2(rollForce * Time.fixedDeltaTime, 0);
+            } 
+            
+            player.Animator.SetTrigger(CombatAnimatorParameters.Roll);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace RehvidGames.Characters.Player.States
 {
+    using Animator;
     using Enums;
     using RehvidGames.States;
 
@@ -10,6 +11,17 @@
         public PlayerAttackState(Player player) : base(PlayerState.Attack)
         {
             this.player = player;
+        }
+        
+        public override void EnterState()
+        {
+            player.Animator.SetTrigger(CombatAnimatorParameters.Attack);
+            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+        }
+
+        public override void PhysicsUpdate()
+        {
+            player.TryUpdateSpriteDirectionHorizontally();
         }
     }
 }
