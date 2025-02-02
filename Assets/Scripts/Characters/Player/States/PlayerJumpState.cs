@@ -40,6 +40,10 @@
         public override void ExitState()
         {
             ChangeGravityScale(defaultGravityScale);
+            if (!player.IsInputMovement())
+            {
+                player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+            }
         }
         
         private void ChangeGravityScale(float gravityScale) => player.PhysicsController.ChangeGravityScale(gravityScale);
