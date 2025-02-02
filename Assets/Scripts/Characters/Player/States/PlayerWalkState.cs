@@ -1,7 +1,9 @@
 ﻿namespace RehvidGames.Characters.Player.States
 {
+    using Animator;
     using Enums;
     using RehvidGames.States;
+    using UnityEngine;
 
     public class PlayerWalkState: BaseState<PlayerState>
     {
@@ -15,5 +17,11 @@
             this.speed = speed;    
         }
 
+        public override void PhysicsUpdate()
+        { 
+            player.SetVelocity(new Vector2(player.InputMovement.x, 0) * speed);
+            player.TryUpdateSpriteDirectionHorizontally();
+            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, player.RigidBodyVelocity().magnitude);
+        }
     }
 }

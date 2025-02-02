@@ -4,9 +4,13 @@
 
     public class CharacterPhysicsController : MonoBehaviour
     {
-        [SerializeField] private Rigidbody2D rb; 
+        [SerializeField] public Rigidbody2D rb; 
+        
+        public float GravityScale => rb.gravityScale;
         
         public Vector2 LinearVelocity => rb.linearVelocity;
+        
+        public void ChangeGravityScale(float gravityScale) =>  rb.gravityScale = gravityScale; 
         
         public void AddForce(Vector2 force, ForceMode2D forceMode) => rb.AddForce(force, forceMode);
         
