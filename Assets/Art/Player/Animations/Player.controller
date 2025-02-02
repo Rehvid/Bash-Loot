@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142440a61f174f1c8c682562da609af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 2
+  count: 3
   parameterName: attackType
 --- !u!114 &-3236245954389871265
 MonoBehaviour:

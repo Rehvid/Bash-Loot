@@ -4,16 +4,26 @@
 
     public class CharacterPhysicsController : MonoBehaviour
     {
-        [SerializeField] public Rigidbody2D rb; 
+        [SerializeField] private Rigidbody2D rb;
         
-        public float GravityScale => rb.gravityScale;
+        public float GravityScale => rb.gravityScale; 
         
         public Vector2 LinearVelocity => rb.linearVelocity;
         
-        public void ChangeGravityScale(float gravityScale) =>  rb.gravityScale = gravityScale; 
-        
-        public void AddForce(Vector2 force, ForceMode2D forceMode) => rb.AddForce(force, forceMode);
+        public void ChangeGravityScale(float gravityScale) => rb.gravityScale = gravityScale;
         
         public void SetLinearVelocity(Vector2 velocity) => rb.linearVelocity = velocity;
+
+        
+        public void ApplyForwardMovement(float force)
+        {
+            rb.position += new Vector2(force * Time.fixedDeltaTime, rb.linearVelocity.y);
+        }
+
+        public void ApplyIdleForce(float idleVelocity, float force)
+        {
+            var newVelocity = new Vector2(idleVelocity * force, rb.linearVelocity.y);
+            SetLinearVelocity(newVelocity);
+        }
     }
 }

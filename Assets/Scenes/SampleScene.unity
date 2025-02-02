@@ -761,7 +761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteOrientation: {fileID: 1870588480}
-  physicsController: {fileID: 1870588477}
+  <PhysicsController>k__BackingField: {fileID: 1870588477}
   <StateMachine>k__BackingField: {fileID: 1870588476}
   <Animator>k__BackingField: {fileID: 1870588473}
 --- !u!4 &1870588472

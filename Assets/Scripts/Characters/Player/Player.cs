@@ -7,8 +7,8 @@ namespace RehvidGames.Characters.Player
     {
         [Header("Components")]
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
-        [SerializeField] private CharacterPhysicsController physicsController;
         
+        [field: SerializeField] public CharacterPhysicsController PhysicsController { get; private set;}
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
         [field: SerializeField] public Animator Animator { get; private set; }
         
@@ -21,31 +21,17 @@ namespace RehvidGames.Characters.Player
         #region Sprite Orientation
         public void TryUpdateSpriteDirectionHorizontally() => spriteOrientation.UpdateSpriteDirection(InputMovement);
         
-        public float GetIdleDirection() => spriteOrientation.IsFlippedHorizontally() ? -1f : 1f;
+        public float GetIdleVelocityDirection() => spriteOrientation.IsFlippedHorizontally() ? -1f : 1f;
         
         #endregion
         
         #region Physics Controller
+        
+        public Vector2 RigidBodyVelocity () => PhysicsController.LinearVelocity;
+        
+        public void SetVelocity(Vector2 velocity) => PhysicsController.SetLinearVelocity(velocity);
 
-        public void ApplyForwardMovement(float force) => Rigidbody().position += new Vector2(force * Time.fixedDeltaTime, 0);
-
-        public void ApplyStationaryForce(float force) =>
-            SetVelocity(new Vector2(GetIdleDirection() * force, RigidBodyVelocity().y));
-        
-        public Rigidbody2D Rigidbody() => physicsController.rb;
-        
-        public float GravityScale() => physicsController.GravityScale;
-        
-        public void ChangeGravityScale (float scale) => physicsController.ChangeGravityScale(scale);
-        
-        public Vector2 RigidBodyVelocity () => physicsController.LinearVelocity;
-        
-        public void SetVelocity(Vector2 velocity) => physicsController.SetLinearVelocity(velocity);
-
-        public bool IsStationary() => Mathf.Approximately(RigidBodyVelocity().normalized.magnitude, 0f);
-        
-        public void AddForceToRigidBody(Vector2 force, ForceMode2D mode) => physicsController.AddForce(force, mode);
-        
+        public bool IsIdle() => Mathf.Approximately(RigidBodyVelocity().normalized.magnitude, 0f);
         #endregion
     }
 }

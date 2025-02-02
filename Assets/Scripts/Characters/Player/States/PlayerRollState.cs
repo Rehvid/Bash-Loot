@@ -23,13 +23,13 @@
         {
             player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
             
-            if (player.IsStationary())
+            if (player.IsIdle())
             {  
-                player.ApplyStationaryForce(idleRollForce);
+                player.PhysicsController.ApplyIdleForce(player.GetIdleVelocityDirection(), idleRollForce);
             }
             else
             {
-                player.ApplyForwardMovement(rollForce);
+                player.PhysicsController.ApplyForwardMovement(rollForce);
             } 
             
             player.Animator.SetTrigger(CombatAnimatorParameters.Roll);
@@ -37,7 +37,7 @@
 
         public override void ExitState()
         {
-            if (!player.IsStationary())
+            if (!player.IsIdle())
             {
                 player.SetVelocity(new Vector2(0, 0));
             }

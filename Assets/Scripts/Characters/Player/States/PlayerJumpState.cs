@@ -18,7 +18,7 @@
             this.jumpForce = jumpForce;
             this.fallSpeedMultiplier = fallSpeedMultiplier;
             
-            defaultGravityScale = player.GravityScale();
+            defaultGravityScale = player.PhysicsController.GravityScale;
         }
         
         public override void EnterState()
@@ -31,7 +31,7 @@
         {
             if (CanApplyFallingForce())
             {
-                player.ChangeGravityScale(fallSpeedMultiplier);
+                ChangeGravityScale(fallSpeedMultiplier);
             } 
         }
         
@@ -39,7 +39,9 @@
 
         public override void ExitState()
         {
-            player.ChangeGravityScale(defaultGravityScale);
+            ChangeGravityScale(defaultGravityScale);
         }
+        
+        private void ChangeGravityScale(float gravityScale) => player.PhysicsController.ChangeGravityScale(gravityScale);
     }
 }

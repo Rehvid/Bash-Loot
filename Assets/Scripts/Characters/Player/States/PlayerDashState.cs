@@ -22,13 +22,13 @@
         {
             player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
             
-            if (player.IsStationary())
+            if (player.IsIdle())
             { 
-                player.ApplyStationaryForce(idleDashForce);
+                player.PhysicsController.ApplyIdleForce(player.GetIdleVelocityDirection(), idleDashForce);
             }
             else
             {
-                player.ApplyForwardMovement(dashForce);
+                player.PhysicsController.ApplyForwardMovement(dashForce);
             }
             
             player.Animator.SetTrigger(MovementAnimatorParameters.Dash);
@@ -36,7 +36,7 @@
 
         public override void ExitState()
         {
-            if (!player.IsStationary())
+            if (!player.IsIdle())
             {
                 player.SetVelocity(new Vector2(0, 0));
             }
