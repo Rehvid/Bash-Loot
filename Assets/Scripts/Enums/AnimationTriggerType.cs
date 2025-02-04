@@ -2,6 +2,9 @@
 {
     public enum AnimationTriggerType
     {
-        AttackEnd
+        AttackEnd,
+        RollEnd,
+        DashEnd,
+        BlockIdle,
     }
 }
