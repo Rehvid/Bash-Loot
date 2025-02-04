@@ -23,5 +23,12 @@
         {
             player.TryUpdateSpriteDirectionHorizontally();
         }
+
+        public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
+        {
+            if (triggerType != AnimationTriggerType.AttackEnd) return;
+
+            player.StateMachine.ResetToIdleIfInState(PlayerState.Attack);
+        }
     }
 }

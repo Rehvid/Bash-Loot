@@ -26,9 +26,24 @@
             player.TryUpdateSpriteDirectionHorizontally();
         }
 
+        public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
+        {
+            if (triggerType != AnimationTriggerType.BlockIdle) return;
+            
+            if (player.StateMachine.IsInState(PlayerState.Block))
+            {
+                SetIsBlockingIdle(true);
+            }
+        }
+
         public override void ExitState()
         {
-            player.Animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, false);
+            SetIsBlockingIdle(false);
+        }
+
+        private void SetIsBlockingIdle(bool isBlocking)
+        {
+            player.Animator.SetBool(CombatAnimatorParameters.IsBlockingIdle, isBlocking);
         }
     }
 }

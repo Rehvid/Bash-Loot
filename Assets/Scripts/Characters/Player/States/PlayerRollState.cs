@@ -42,5 +42,12 @@
                 player.SetVelocity(new Vector2(0, 0));
             }
         }
+
+        public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
+        {
+            if (triggerType != AnimationTriggerType.RollEnd) return;
+            
+            player.StateMachine.ResetToIdleIfInState(PlayerState.Roll);
+        }
     }
 }

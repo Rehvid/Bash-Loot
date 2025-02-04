@@ -61,8 +61,6 @@
             }
         }
         
-        public void OnDashEnd() => player.StateMachine.ResetToIdleIfInState(PlayerState.Dash);
-
         private bool CanDash(InputAction.CallbackContext context) => context.performed 
              && onGround 
              && !player.StateMachine.IsInState(PlayerState.Jump);

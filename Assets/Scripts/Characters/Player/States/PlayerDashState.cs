@@ -41,5 +41,12 @@
                 player.SetVelocity(new Vector2(0, 0));
             }
         }
+
+        public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
+        {
+            if (triggerType != AnimationTriggerType.DashEnd) return;
+
+            player.StateMachine.ResetToIdleIfInState(PlayerState.Dash);
+        }
     }
 }
