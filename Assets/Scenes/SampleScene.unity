@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 353905269}
   - component: {fileID: 353905270}
   m_Layer: 0
-  m_Name: CombatArea
+  m_Name: CombatZoneT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 1174059925}
   - component: {fileID: 1174059924}
   m_Layer: 0
-  m_Name: PatrolArea
+  m_Name: PatrolZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1015,9 +1015,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1581078475}
-  - component: {fileID: 1581078478}
-  - component: {fileID: 1581078477}
-  - component: {fileID: 1581078479}
   - component: {fileID: 1581078481}
   - component: {fileID: 1581078480}
   - component: {fileID: 1581078482}
@@ -1026,6 +1023,9 @@ GameObject:
   - component: {fileID: 1581078485}
   - component: {fileID: 1581078486}
   - component: {fileID: 1581078487}
+  - component: {fileID: 1581078477}
+  - component: {fileID: 1581078479}
+  - component: {fileID: 1581078478}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1581078480}
-  patrolArea: {fileID: 1174059924}
+  patrolZone: {fileID: 1174059924}
   cooldownTimer: {fileID: 1581078486}
   sight: {fileID: 1581078482}
   behaviorSettings: {fileID: 11400000, guid: 689587da89233a2438bddd54cb8a02bb, type: 2}

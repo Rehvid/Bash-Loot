@@ -21,17 +21,12 @@
             states.Add(EnemyState.Chasing, new EnemyChaseState(enemy));
             states.Add(EnemyState.Attacking, new EnemyAttackState(enemy));
 
-            currentState = states[EnemyState.Patrolling];
+            CurrentState = states[EnemyState.Patrolling];
         }
 
         public void SwitchState(EnemyState newState)
         {
             StateTransition(newState);
-        }
-
-        public void SetAnimationTriggerType(AnimationTriggerType triggerType)
-        {
-            currentState.AnimationTriggerEvent(triggerType);
         }
     }
 }

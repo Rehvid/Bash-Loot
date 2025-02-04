@@ -8,43 +8,43 @@
     public class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         protected Dictionary<EState, BaseState<EState>> states = new();
-        protected BaseState<EState> currentState;
+        public BaseState<EState> CurrentState { get; protected set; }
         
         private bool isInTransitionState;
 
         private void Start()
         {
-            currentState.EnterState();
+            CurrentState.EnterState();
         }
 
         private void Update()
         {
             if (isInTransitionState) return;
             
-            currentState.FrameUpdate();
+            CurrentState.FrameUpdate();
         }
 
         private void FixedUpdate()
         {
-            if (typeof(EState) == typeof(EnemyState))
+            if (typeof(EState) == typeof(PlayerState))
             {
-                 Debug.LogWarning($"CurrentState: {currentState.StateKey} ");
+                 Debug.LogWarning($"CurrentState: {CurrentState.StateKey} ");
             }
            
             if (isInTransitionState) return;
             
-            currentState.PhysicsUpdate();
+            CurrentState.PhysicsUpdate();
         }
 
-        public bool IsInState(EState stateKey) => currentState.StateKey.Equals(stateKey);
+        public bool IsInState(EState stateKey) => CurrentState.StateKey.Equals(stateKey);
         
         protected void StateTransition(EState stateKey)
         {
             isInTransitionState = true;
-            currentState.ExitState();
+            CurrentState.ExitState();
             
-            currentState = states[stateKey];
-            currentState.EnterState();
+            CurrentState = states[stateKey];
+            CurrentState.EnterState();
             
             isInTransitionState = false;
         }

@@ -1,16 +1,17 @@
 namespace RehvidGames.Characters.Player
 {
+    using Enums;
     using States;
     using UnityEngine;
 
-    public class Player : MonoBehaviour
+    public class Player : BaseCharacter
     {
         [Header("Components")]
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
         
         [field: SerializeField] public CharacterPhysicsController PhysicsController { get; private set;}
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
-        [field: SerializeField] public Animator Animator { get; private set; }
+        
         
         #region Input movement 
         public Vector2 InputMovement { get; set; }
@@ -33,5 +34,10 @@ namespace RehvidGames.Characters.Player
 
         public bool IsIdle() => Mathf.Approximately(RigidBodyVelocity().normalized.magnitude, 0f);
         #endregion
+
+        public override void SetAnimationTriggerType(AnimationTriggerType triggerType)
+        {
+            StateMachine.CurrentState.AnimationTriggerEvent(triggerType);
+        }
     }
 }

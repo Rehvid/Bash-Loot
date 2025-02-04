@@ -20,7 +20,7 @@
             states.Add(PlayerState.Jump, new PlayerJumpState(player, movementData.JumpForce, movementData.FallSpeedMultiplier));
             states.Add(PlayerState.Block, new PlayerBlockState(player));
             
-            currentState = states[PlayerState.Idle];
+            CurrentState = states[PlayerState.Idle];
         }
 
         public void SwitchState(PlayerState newState)
