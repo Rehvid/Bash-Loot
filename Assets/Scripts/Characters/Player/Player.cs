@@ -34,10 +34,5 @@ namespace RehvidGames.Characters.Player
 
         public bool IsIdle() => Mathf.Approximately(RigidBodyVelocity().normalized.magnitude, 0f);
         #endregion
-
-        public override void SetAnimationTriggerType(AnimationTriggerType triggerType)
-        {
-            StateMachine.CurrentState.AnimationTriggerEvent(triggerType);
-        }
     }
 }

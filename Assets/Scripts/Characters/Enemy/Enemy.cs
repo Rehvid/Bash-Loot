@@ -12,10 +12,5 @@
         
         [Header("Settings")]
         [SerializeField] private EnemyType enemyType;
-
-        public override void SetAnimationTriggerType(AnimationTriggerType triggerType)
-        {
-            StateMachine.CurrentState.AnimationTriggerEvent(triggerType);
-        }
     }
 }

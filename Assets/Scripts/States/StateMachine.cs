@@ -37,6 +37,11 @@
         }
 
         public bool IsInState(EState stateKey) => CurrentState.StateKey.Equals(stateKey);
+
+        public void OnAnimationTrigger(AnimationTriggerType triggerType)
+        {
+            CurrentState.AnimationTriggerEvent(triggerType);
+        }
         
         protected void StateTransition(EState stateKey)
         {
