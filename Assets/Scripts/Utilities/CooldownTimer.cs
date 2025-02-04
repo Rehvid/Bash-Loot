@@ -14,7 +14,5 @@
         public bool HasElapsed(float delay) => Time.time - lastTime >= delay;
         
         public bool HasElapsedFixed(float delay) => Time.fixedTime - lastTimeFixed >= delay;
-        
-        public bool IsInitializedFixed() => !float.IsNegativeInfinity(lastTimeFixed) && lastTimeFixed > 0.0f;
     }
 }

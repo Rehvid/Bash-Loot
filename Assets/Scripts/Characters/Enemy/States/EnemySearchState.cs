@@ -49,8 +49,10 @@
             }
         }
 
-        private bool IsTargetReached() =>
-            enemy.Movement.IsTargetReached(LastPlayerPosition(), behaviorSettings.SearchStopDistance);
+        private bool IsTargetReached()
+        {
+            return enemy.Movement.IsTargetReached(LastPlayerPosition(), behaviorSettings.SearchStopDistance);
+        }
 
         private void SetHasTargetReached()
         {

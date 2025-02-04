@@ -30,9 +30,13 @@
             player.Animator.SetFloat(MovementAnimatorParameters.YVelocity, player.RigidBodyVelocity().y);
         }
 
-        private bool CanApplyMovement() => (onGround && !isJumping) 
-            && player.StateMachine.IsInState(PlayerState.Idle) 
-            && player.IsInputMovement();
+        private bool CanApplyMovement()
+        {
+            return (onGround && !isJumping) 
+                   && player.StateMachine.IsInState(PlayerState.Idle) 
+                   && player.IsInputMovement();
+        }
+        
         
         private bool CanPerformJump() => isJumping && onGround;
         
@@ -60,9 +64,13 @@
                 player.StateMachine.SwitchState(PlayerState.Dash);
             }
         }
+
+        private bool CanDash(InputAction.CallbackContext context)
+        {
+            return context.performed
+                   && onGround
+                   && !player.StateMachine.IsInState(PlayerState.Jump);
+        }
         
-        private bool CanDash(InputAction.CallbackContext context) => context.performed 
-             && onGround 
-             && !player.StateMachine.IsInState(PlayerState.Jump);
     }
 }

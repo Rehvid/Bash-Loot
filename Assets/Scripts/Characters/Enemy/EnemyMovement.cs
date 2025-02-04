@@ -72,7 +72,10 @@
         }
         
         public void ResumeMovement() => isStopped = false;
-        
-        private void SetAnimatorSpeed() => animator.SetFloat(MovementAnimatorParameters.XVelocity, isStopped ? 0 : currentSpeed);
+
+        private void SetAnimatorSpeed()
+        {
+            animator.SetFloat(MovementAnimatorParameters.XVelocity, isStopped ? 0 : currentSpeed);
+        }
     }
 }

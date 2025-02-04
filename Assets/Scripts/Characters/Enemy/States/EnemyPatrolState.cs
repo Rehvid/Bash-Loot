@@ -8,7 +8,7 @@
     public class EnemyPatrolState: BaseState<EnemyState>
     {
         private readonly Enemy enemy;
-        private readonly EnemyPatrolZone _patrolZone;
+        private readonly EnemyPatrolZone patrolZone;
         private readonly CooldownTimer cooldownTimer;
         private readonly EnemyBehaviorSettings behaviorSettings;
         
@@ -22,7 +22,7 @@
         ) : base(EnemyState.Patrolling) 
         {
             this.enemy = enemy;
-            this._patrolZone = patrolZone;
+            this.patrolZone = patrolZone;
             this.cooldownTimer = cooldownTimer;
             this.behaviorSettings = behaviorSettings;
         }
@@ -37,11 +37,11 @@
 
         private void SelectNextTarget()
         {
-            Vector2 randomPatrolPoint = _patrolZone.GetRandomPatrolPoint();
+            Vector2 randomPatrolPoint = patrolZone.GetRandomPatrolPoint();
             
             if (currentTarget == randomPatrolPoint)
             {
-                randomPatrolPoint = _patrolZone.GetRandomPatrolPoint();
+                randomPatrolPoint = patrolZone.GetRandomPatrolPoint();
             }
             
             currentTarget = randomPatrolPoint;
@@ -77,7 +77,10 @@
             cooldownTimer.ResetFixed(); 
         }
 
-        private bool IsTargetReached() => enemy.Movement.IsTargetReached(currentTarget, behaviorSettings.WaypointTolerance);
+        private bool IsTargetReached()
+        {
+            return enemy.Movement.IsTargetReached(currentTarget, behaviorSettings.WaypointTolerance);
+        }
 
 
         public override void ExitState()

@@ -70,9 +70,14 @@
             
             return point * radius;
         }
-        
-        private bool IsFarEnoughFromOtherPoints(Vector2 point) => 
-            patrolPoints.All(existingPoint => Vector2.Distance(point, existingPoint) >= minDistanceBetweenPoints);
+
+        private bool IsFarEnoughFromOtherPoints(Vector2 point)
+        {
+            return patrolPoints.All(
+                existingPoint => Vector2.Distance(point, existingPoint) >= minDistanceBetweenPoints
+            );
+        }
+           
         
         public Vector2 GetRandomPatrolPoint()
         {

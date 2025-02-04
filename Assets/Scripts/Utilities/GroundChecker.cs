@@ -20,8 +20,10 @@
             if (!IsCollidingWithGround(collision)) return;
             groundCheck?.Invoke(state);
         }
-        
-        private bool IsCollidingWithGround(Collision2D collision) 
-            => ((1 << collision.gameObject.layer) & groundLayer) != 0; 
+
+        private bool IsCollidingWithGround(Collision2D collision)
+        {
+            return ((1 << collision.gameObject.layer) & groundLayer) != 0;
+        }
     }
 }

@@ -28,7 +28,9 @@
             StateTransition(newState);
         }
 
-        public void ResetToIdleIfInState(PlayerState stateToEnd) => 
-            ResetToStateIfInState(stateToEnd, PlayerState.Idle);
+        public void ResetToIdleIfInState(PlayerState currentState)
+        {
+            ResetToStateIfInState(currentState, PlayerState.Idle);
+        }
     }
 }

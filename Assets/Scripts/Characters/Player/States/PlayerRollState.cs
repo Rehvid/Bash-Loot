@@ -17,7 +17,6 @@
             this.idleRollForce = idleRollForce;
             this.rollForce = rollForce;
         }
-
         
         public override void EnterState()
         {
