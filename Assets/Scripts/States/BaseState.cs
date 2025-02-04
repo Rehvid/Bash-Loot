@@ -1,6 +1,7 @@
 ﻿namespace RehvidGames.States
 {
     using System;
+    using Enums;
     using Interfaces;
 
     public abstract class BaseState<EState>: IState  where EState : Enum
@@ -19,5 +20,7 @@
         public virtual void FrameUpdate() {}
         
         public virtual void PhysicsUpdate() {}
+        
+        public virtual void AnimationTriggerEvent(AnimationTriggerType triggerType) {}
     }
 }

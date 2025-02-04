@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Enums;
     using UnityEngine;
 
     public class StateMachine<EState> : MonoBehaviour where EState : Enum
@@ -25,6 +26,11 @@
 
         private void FixedUpdate()
         {
+            if (typeof(EState) == typeof(EnemyState))
+            {
+                 Debug.LogWarning($"CurrentState: {currentState.StateKey} ");
+            }
+           
             if (isInTransitionState) return;
             
             currentState.PhysicsUpdate();

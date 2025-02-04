@@ -2,9 +2,42 @@
 {
     using Enums;
     using RehvidGames.States;
-    
-    public class EnemyChaseState: BaseState<EnemyState>
+    using UnityEngine;
+
+    public class EnemyChaseState : BaseState<EnemyState>
     {
-        public EnemyChaseState() : base(EnemyState.Chasing) { }
+        private readonly Enemy enemy;
+        
+        private GameObject player;
+        
+        public EnemyChaseState(Enemy enemy) : base(EnemyState.Chasing)
+        {
+            this.enemy = enemy;
+            
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
+        public override void EnterState()
+        {
+            enemy.Movement.SetChaseSpeed();
+            enemy.Movement.Direction = GetPlayerDirection();
+        }
+
+        public override void FrameUpdate()
+        {
+            enemy.Movement.Direction = GetPlayerDirection();
+        }
+        
+        private Vector2 GetPlayerDirection()
+        {
+            var playerDirection = new Vector2(player.transform.position.x, player.transform.position.y);
+            
+            return (playerDirection - enemy.GetPosition()).normalized;
+        }
+
+        public override void ExitState()
+        {
+            enemy.Movement.SetMovementSpeed();
+        }
     }
 }
