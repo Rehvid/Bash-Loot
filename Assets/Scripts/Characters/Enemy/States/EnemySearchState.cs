@@ -63,7 +63,7 @@
 
         private void SwitchStateIfIsNotDetected()
         {
-            if (!enemySight.detectionResult.IsPlayerDetected)
+            if (!enemySight.DetectionResult.IsPlayerDetected)
             {
                 enemy.StateMachine.SwitchState(EnemyState.Patrolling);
             }

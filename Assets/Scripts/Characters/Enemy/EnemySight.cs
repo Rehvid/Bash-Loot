@@ -1,6 +1,7 @@
 ﻿namespace RehvidGames.Characters.Enemy
 {
     using Enums;
+    using Player;
     using UnityEngine;
 
     public class EnemySight : MonoBehaviour
@@ -18,15 +19,16 @@
         [SerializeField] private Color layerDetectedColor;
         [SerializeField] private Color lineOfSightColor;
         
-        public Vector3 LastPlayerPosition { get;  set; }
+        public Vector2 LastPlayerPosition { get;  set; }
+        public EnemyRaycastResult DetectionResult { get; private set; }
         
-        public EnemyRaycastResult detectionResult;
-        private GameObject player;
+        private Player player;
         
         private void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
-            if (player == null)
+            var gameObjectPlayer =  GameObject.FindGameObjectWithTag("Player");
+            
+            if (!gameObjectPlayer.TryGetComponent(out player))
             {
                 Debug.LogError("Player not found in scene!");
             }
@@ -34,31 +36,46 @@
 
         private void FixedUpdate()
         {
-            detectionResult = RaycastToPlayer();
+            DetectionResult = RaycastToPlayer();
 
-            if (detectionResult.IsPlayerDetected)
+            if (DetectionResult.IsPlayerDetected)
             {
-                if (enemy.StateMachine.IsInState(EnemyState.Searching) ||
-                    enemy.StateMachine.IsInState(EnemyState.Patrolling))
-                {
-                    enemy.StateMachine.SwitchState(EnemyState.Chasing);
-                }
+                TryToSwitchChaseState();
                 return;
             }
 
-            if (enemy.StateMachine.IsInState(EnemyState.Chasing))
+            if (!IsInState(EnemyState.Chasing)) return;
+            
+            SwitchToSearchState();
+        }
+
+        private void TryToSwitchChaseState()
+        {
+            if (IsInState(EnemyState.Searching) || IsInState(EnemyState.Patrolling))
             {
-                LastPlayerPosition = player.transform.position;
-                enemy.StateMachine.SwitchState(EnemyState.Searching);
+                SwitchState(EnemyState.Chasing);
             }
         }
+
+        private void SwitchToSearchState()
+        {
+            LastPlayerPosition = player.GetPosition();
+            SwitchState(EnemyState.Searching);
+        }
         
-        private Vector3 GetDirectionToPlayer() => (player.transform.position - transform.position).normalized;
+        private Vector2 GetDirectionToPlayer() => (player.GetPosition() - enemy.GetPosition()).normalized;
+
+        private bool IsInState(EnemyState state)
+        {
+            return enemy.StateMachine.IsInState(state);
+        }
+        
+        private void SwitchState(EnemyState state) => enemy.StateMachine.SwitchState(state);
         
         private EnemyRaycastResult RaycastToPlayer()
         {
             RaycastHit2D hit = Physics2D.Raycast(
-                transform.position, 
+                enemy.GetPosition(), 
                 GetDirectionToPlayer(), 
                 detectionDistance, 
                 layerMasks
@@ -77,17 +94,17 @@
             if (result.IsPlayerDetected)
             {
                 Gizmos.color = playerDetectedColor;
-                Gizmos.DrawLine(transform.position, result.HitPoint);
+                Gizmos.DrawLine(enemy.GetPosition(), result.HitPoint);
             }
             else if (result.IsLayerDetected)
             {
                 Gizmos.color = layerDetectedColor;
-                Gizmos.DrawLine(transform.position, result.HitPoint);
+                Gizmos.DrawLine(enemy.GetPosition(), result.HitPoint);
             }
             else
             {
                 Gizmos.color = lineOfSightColor;
-                Gizmos.DrawLine(transform.position, transform.position + GetDirectionToPlayer() * detectionDistance);
+                Gizmos.DrawLine(enemy.GetPosition(), enemy.GetPosition() + GetDirectionToPlayer() * detectionDistance);
             }
         }
     }
