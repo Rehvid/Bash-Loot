@@ -15,8 +15,8 @@
         
         public override void EnterState()
         {
+            player.StopWalkingAnimation();
             player.Animator.SetTrigger(CombatAnimatorParameters.Attack);
-            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
         }
 
         public override void PhysicsUpdate()

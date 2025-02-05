@@ -5,8 +5,8 @@
 
     public class EnemyMovement : MonoBehaviour
     {
-        [Header("Components")]
-        [SerializeField] private CharacterPhysicsController physicsController;
+        [Header("Components")] 
+        [SerializeField] private Rigidbody2D rb;
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
         [SerializeField] private Animator animator;
         
@@ -41,13 +41,13 @@
 
         private void MovePosition()
         {
-            var newPosition = physicsController.Position + Direction.normalized * (currentSpeed * Time.fixedDeltaTime);
-            physicsController.MovePosition(newPosition);
+            var newPosition = rb.position + Direction.normalized * (currentSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(newPosition);
         }
 
         public bool IsTargetReached(Vector2 targetPosition, float maxDistanceToTargetForStop)
         {
-            float distance = Vector2.Distance(physicsController.Position, targetPosition);
+            float distance = Vector2.Distance(rb.position, targetPosition);
             
             return distance <= maxDistanceToTargetForStop; 
         }
@@ -66,9 +66,9 @@
         
         public void StopMovement()
         {
-             physicsController.SetLinearVelocity(Vector2.zero);
-             isStopped = true;
-             SetAnimatorSpeed();
+            rb.linearVelocity = Vector2.zero;
+            isStopped = true;
+            SetAnimatorSpeed();
         }
         
         public void ResumeMovement() => isStopped = false;

@@ -10,7 +10,6 @@
         private readonly Player player;
         private readonly float speed;
         
-        
         public PlayerWalkState(Player player, float speed) : base(PlayerState.Walk)
         {
             this.player = player;
@@ -21,7 +20,7 @@
         { 
             player.SetVelocity(new Vector2(player.InputMovement.x, 0) * speed);
             player.TryUpdateSpriteDirectionHorizontally();
-            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, player.RigidBodyVelocity().magnitude);
+            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, player.GetVelocity().magnitude);
         }
     }
 }

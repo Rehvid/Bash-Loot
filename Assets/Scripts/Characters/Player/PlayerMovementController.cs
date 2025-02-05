@@ -27,7 +27,7 @@
                 player.StateMachine.SwitchState(PlayerState.Jump);
             }
             
-            player.Animator.SetFloat(MovementAnimatorParameters.YVelocity, player.RigidBodyVelocity().y);
+            player.Animator.SetFloat(MovementAnimatorParameters.YVelocity, player.GetVelocity().y);
         }
 
         private bool CanApplyMovement()

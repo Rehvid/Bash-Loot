@@ -3,7 +3,6 @@
     using Animator;
     using Enums;
     using RehvidGames.States;
-    using UnityEngine;
 
     public class PlayerBlockState: BaseState<PlayerState>
     {
@@ -16,8 +15,8 @@
         
         public override void EnterState()
         { 
-            player.SetVelocity(Vector2.zero);
-            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+            player.ClearVelocity();
+            player.StopWalkingAnimation();
             player.Animator.SetTrigger(CombatAnimatorParameters.Block);
         }
 

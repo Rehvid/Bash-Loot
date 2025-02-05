@@ -804,7 +804,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.69
+  m_Radius: 3.02
 --- !u!1 &1562893496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,9 +1166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67f792ab15e40e88f0ead056af6e9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Animator>k__BackingField: {fileID: 1581078479}
   <StateMachine>k__BackingField: {fileID: 1581078481}
   <Movement>k__BackingField: {fileID: 1581078484}
-  <Animator>k__BackingField: {fileID: 1581078479}
   enemyType: 0
 --- !u!114 &1581078481
 MonoBehaviour:
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c54dc27fd246ac8ca12a25c834db8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1581078477}
+  <Rigidbody2D>k__BackingField: {fileID: 0}
 --- !u!114 &1581078484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1233,7 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf9ef423f34bfc9b567fd2d366ff59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicsController: {fileID: 1581078483}
+  rb: {fileID: 1581078477}
   spriteOrientation: {fileID: 1581078485}
   animator: {fileID: 1581078479}
   movementSpeed: 1
@@ -1437,14 +1437,14 @@ GameObject:
   - component: {fileID: 1870588471}
   - component: {fileID: 1870588481}
   - component: {fileID: 1870588479}
-  - component: {fileID: 1870588470}
-  - component: {fileID: 1870588473}
-  - component: {fileID: 1870588474}
-  - component: {fileID: 1870588478}
   - component: {fileID: 1870588477}
   - component: {fileID: 1870588476}
+  - component: {fileID: 1870588473}
+  - component: {fileID: 1870588474}
+  - component: {fileID: 1870588470}
   - component: {fileID: 1870588480}
   - component: {fileID: 1870588482}
+  - component: {fileID: 1870588478}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1519,10 +1519,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b2911c4e3306f4682ad37322c94f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Animator>k__BackingField: {fileID: 1870588473}
   spriteOrientation: {fileID: 1870588480}
   <PhysicsController>k__BackingField: {fileID: 1870588477}
   <StateMachine>k__BackingField: {fileID: 1870588476}
-  <Animator>k__BackingField: {fileID: 1870588473}
 --- !u!4 &1870588472
 Transform:
   m_ObjectHideFlags: 0
@@ -1614,7 +1614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c54dc27fd246ac8ca12a25c834db8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1870588474}
+  <Rigidbody2D>k__BackingField: {fileID: 1870588474}
 --- !u!114 &1870588478
 MonoBehaviour:
   m_ObjectHideFlags: 0

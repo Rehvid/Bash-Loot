@@ -35,7 +35,7 @@
                 player.StateMachine.SwitchState(PlayerState.Idle); 
             }
         }
-
+        
         private bool IsContextPerformedAndIsNotInJumpState(InputAction.CallbackContext context)
         {
             return context.performed && !player.StateMachine.IsInState(PlayerState.Jump);

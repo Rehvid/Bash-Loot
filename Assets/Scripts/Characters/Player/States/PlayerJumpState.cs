@@ -18,12 +18,12 @@
             this.jumpForce = jumpForce;
             this.fallSpeedMultiplier = fallSpeedMultiplier;
             
-            defaultGravityScale = player.PhysicsController.GravityScale;
+            defaultGravityScale = player.PhysicsController.Rigidbody2D.gravityScale;
         }
         
         public override void EnterState()
         {
-            player.SetVelocity(new Vector2(player.RigidBodyVelocity().x , jumpForce)); 
+            player.SetVelocity(new Vector2(player.GetVelocity().x , jumpForce)); 
             player.Animator.SetTrigger(MovementAnimatorParameters.Jump);
         }
         
@@ -35,14 +35,14 @@
             } 
         }
         
-        private bool CanApplyFallingForce() => player.RigidBodyVelocity().y < 0;
+        private bool CanApplyFallingForce() => player.GetVelocity().y < 0;
 
         public override void ExitState()
         {
             ChangeGravityScale(defaultGravityScale);
             if (!player.IsInputMovement())
             {
-                player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
+                player.StopWalkingAnimation();
             }
         }
         

@@ -3,7 +3,6 @@
     using Animator;
     using Enums;
     using RehvidGames.States;
-    using UnityEngine;
 
     public class PlayerDashState: BaseState<PlayerState>
     {
@@ -20,28 +19,19 @@
         
         public override void EnterState()
         {
-            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
-            
-            if (player.IsIdle())
-            { 
-                player.PhysicsController.ApplyIdleForce(player.GetIdleVelocityDirection(), idleDashForce);
-            }
-            else
-            {
-                player.PhysicsController.ApplyForwardMovement(dashForce);
-            }
-            
+            player.StopWalkingAnimation();
+            player.ApplyMovementBasedOnState(player.PhysicsController.IsIdle() ? idleDashForce : dashForce);
             player.Animator.SetTrigger(MovementAnimatorParameters.Dash);
         }
 
         public override void ExitState()
         {
-            if (!player.IsIdle())
+            if (!player.PhysicsController.IsIdle())
             {
-                player.SetVelocity(new Vector2(0, 0));
+                player.ClearVelocity();
             }
         }
-
+        
         public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
         {
             if (triggerType != AnimationTriggerType.DashEnd) return;

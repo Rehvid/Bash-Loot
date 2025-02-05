@@ -3,7 +3,6 @@
     using Animator;
     using Enums;
     using RehvidGames.States;
-    using UnityEngine;
 
     public class PlayerRollState: BaseState<PlayerState>
     {
@@ -20,25 +19,16 @@
         
         public override void EnterState()
         {
-            player.Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
-            
-            if (player.IsIdle())
-            {  
-                player.PhysicsController.ApplyIdleForce(player.GetIdleVelocityDirection(), idleRollForce);
-            }
-            else
-            {
-                player.PhysicsController.ApplyForwardMovement(rollForce);
-            } 
-            
+            player.StopWalkingAnimation();
+            player.ApplyMovementBasedOnState(player.PhysicsController.IsIdle() ? idleRollForce : rollForce);
             player.Animator.SetTrigger(CombatAnimatorParameters.Roll);
         }
 
         public override void ExitState()
         {
-            if (!player.IsIdle())
+            if (!player.PhysicsController.IsIdle())
             {
-                player.SetVelocity(new Vector2(0, 0));
+                player.ClearVelocity();
             }
         }
 
