@@ -50,8 +50,7 @@
 
         private Vector2 GetDirectionToTarget()
         {
-            var currentEnemyPosition = new Vector2(enemy.transform.position.x, enemy.transform.position.y);
-            return (currentTarget - currentEnemyPosition).normalized;
+            return (currentTarget - enemy.GetPosition()).normalized;
         }
         
         public override void PhysicsUpdate()
@@ -73,20 +72,23 @@
         private void StartNewPatrol()
         {
             SelectNextTarget();
-            enemy.Movement.ResumeMovement();
-            cooldownTimer.ResetFixed(); 
+            ResumeMovementAndResetCooldown();
         }
 
         private bool IsTargetReached()
         {
             return enemy.Movement.IsTargetReached(currentTarget, behaviorSettings.WaypointTolerance);
         }
-
-
+        
         public override void ExitState()
         {
-            cooldownTimer.ResetFixed();
+            ResumeMovementAndResetCooldown();
+        }
+        
+        private void ResumeMovementAndResetCooldown()
+        {
             enemy.Movement.ResumeMovement();
+            cooldownTimer.ResetFixed();
         }
     }
 }

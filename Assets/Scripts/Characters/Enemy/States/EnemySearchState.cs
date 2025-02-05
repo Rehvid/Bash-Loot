@@ -56,8 +56,8 @@
 
         private void SetHasTargetReached()
         {
-            cooldownTimer.Reset();
             hasTargetReached = true;
+            cooldownTimer.Reset();
             enemy.Movement.StopMovement();
         }
 

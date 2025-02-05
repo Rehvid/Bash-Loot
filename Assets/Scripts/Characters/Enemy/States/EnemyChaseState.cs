@@ -1,6 +1,7 @@
 ﻿namespace RehvidGames.Characters.Enemy.States
 {
     using Enums;
+    using Player;
     using RehvidGames.States;
     using UnityEngine;
 
@@ -8,32 +9,37 @@
     {
         private readonly Enemy enemy;
         
-        private GameObject player;
+        private Player player;
         
         public EnemyChaseState(Enemy enemy) : base(EnemyState.Chasing)
         {
             this.enemy = enemy;
             
-            player = GameObject.FindGameObjectWithTag("Player");
+            var gameObjectPlayer =  GameObject.FindGameObjectWithTag("Player");
+            
+            if (!gameObjectPlayer.TryGetComponent(out player))
+            {
+                Debug.LogError("Player not found in scene!");
+            }
         }
 
         public override void EnterState()
         {
             enemy.Movement.SetChaseSpeed();
-            enemy.Movement.Direction = GetPlayerDirection();
+            SetMovementDirection();
         }
 
         public override void FrameUpdate()
         {
-            enemy.Movement.Direction = GetPlayerDirection();
+            SetMovementDirection();
         }
         
         private Vector2 GetPlayerDirection()
         {
-            var playerDirection = new Vector2(player.transform.position.x, player.transform.position.y);
-            
-            return (playerDirection - enemy.GetPosition()).normalized;
+            return (player.GetPosition() - enemy.GetPosition()).normalized;
         }
+        
+        private void SetMovementDirection() => enemy.Movement.Direction = GetPlayerDirection();
 
         public override void ExitState()
         {

@@ -36,7 +36,7 @@
         
         public override void ExitState()
         {
-            attackStateType = AttackStateType.Ready;
+            ResetAttackStateType();
             enemy.Movement.ResumeMovement();
         }
 
@@ -44,8 +44,10 @@
         {
             if (triggerType == AnimationTriggerType.AttackEnd)
             {
-                attackStateType = AttackStateType.Ready;
+                ResetAttackStateType();
             }
         }
+
+        private void ResetAttackStateType() => attackStateType = AttackStateType.Ready;
     }
 }
