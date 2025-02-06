@@ -10,7 +10,15 @@ namespace RehvidGames.Characters.Player
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
         [field: SerializeField] public PlayerPhysicsController PhysicsController { get; private set;}
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
-        
+
+
+        #region Collider
+
+        public CapsuleCollider2D GetCapsuleCollider()
+        {
+            return TryGetComponent(out CapsuleCollider2D capsuleCollider) ? capsuleCollider : null;
+        }
+        #endregion
         
         #region Animations funcitons
         public void StopWalkingAnimation() => Animator.SetFloat(MovementAnimatorParameters.XVelocity, 0);
