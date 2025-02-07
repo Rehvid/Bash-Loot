@@ -1,6 +1,7 @@
 namespace RehvidGames.Characters.Player
 {
     using Animator;
+    using Enums;
     using States;
     using UnityEngine;
 
@@ -12,6 +13,19 @@ namespace RehvidGames.Characters.Player
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
 
 
+        public override void TakeDamage(float damageTaken)
+        {
+            if (!CanAvoidDamage())
+            {
+                base.TakeDamage(damageTaken);
+            }
+        }
+
+        private bool CanAvoidDamage()
+        {
+            return StateMachine.IsInState(PlayerState.Block) || StateMachine.IsInState(PlayerState.Roll);
+        }
+        
         #region Collider
 
         public CapsuleCollider2D GetCapsuleCollider()

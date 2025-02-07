@@ -3,6 +3,7 @@
     using Animator;
     using Enums;
     using RehvidGames.States;
+    using UnityEngine;
 
     public class PlayerBlockState: BaseState<PlayerState>
     {
@@ -14,7 +15,8 @@
         }
         
         public override void EnterState()
-        { 
+        {
+            player.PhysicsController.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
             player.ClearVelocity();
             player.StopWalkingAnimation();
             player.Animator.SetTrigger(CombatAnimatorParameters.Block);
@@ -37,6 +39,7 @@
 
         public override void ExitState()
         {
+            player.PhysicsController.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
             SetIsBlockingIdle(false);
         }
 

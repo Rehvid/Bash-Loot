@@ -10,7 +10,7 @@
         
         public Vector2 GetPosition() => new (transform.position.x, transform.position.y);
 
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
             Debug.Log($"Damage taken: {damage}, gameObject {gameObject.name}");
         }
