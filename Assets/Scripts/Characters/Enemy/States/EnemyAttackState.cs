@@ -42,9 +42,17 @@
 
         public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
         {
-            if (triggerType == AnimationTriggerType.AttackEnd)
+            switch (triggerType)
             {
-                ResetAttackStateType();
+                case AnimationTriggerType.AttackEnd:
+                    ResetAttackStateType();
+                    break;
+                case AnimationTriggerType.ActivateAttackCollider:
+                    enemy.Weapon.ActivateAttackCollider();
+                    break;
+                case AnimationTriggerType.DeactivateAttackCollider:
+                    enemy.Weapon.DeactivateAttackCollider();
+                    break;
             }
         }
 
