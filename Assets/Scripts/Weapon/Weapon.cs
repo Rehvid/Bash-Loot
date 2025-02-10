@@ -22,12 +22,13 @@
 
         public void ActivateAttackCollider()
         {
+            hitCollider.enabled = true;
             hitCollider.isTrigger = true;
         }
 
         public void DeactivateAttackCollider()
         {
-            hitCollider.isTrigger = false;
+            hitCollider.enabled = false;
         }
 
     }
