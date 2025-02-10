@@ -13,9 +13,10 @@
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.TryGetComponent(out IDamageable damageable))
+            float damageToDeal = weaponStats.Damage;
+            if (other.gameObject.TryGetComponent(out IDamageable damageable) && damageable.CanTakeDamage(damageToDeal))
             {
-                damageable.TakeDamage(weaponStats.Damage);
+                damageable.TakeDamage(damageToDeal);
             }
         }
 

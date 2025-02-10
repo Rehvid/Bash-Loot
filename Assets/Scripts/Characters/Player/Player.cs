@@ -11,16 +11,16 @@ namespace RehvidGames.Characters.Player
         [SerializeField] private CharacterSpriteOrientation spriteOrientation;
         [field: SerializeField] public PlayerPhysicsController PhysicsController { get; private set;}
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
-
+        
 
         public override void TakeDamage(float damageTaken)
         {
             if (!CanAvoidDamage())
             {
-                base.TakeDamage(damageTaken);
+               base.TakeDamage(damageTaken);
             }
         }
-
+        
         private bool CanAvoidDamage()
         {
             return StateMachine.IsInState(PlayerState.Block) || StateMachine.IsInState(PlayerState.Roll);
