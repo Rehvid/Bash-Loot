@@ -17,5 +17,12 @@
         public static readonly int Block = Animator.StringToHash("block");
         public static readonly int IsBlockingIdle = Animator.StringToHash("isBlockingIdle");
         public static readonly int Roll = Animator.StringToHash("roll");
+        public static readonly int Hit = Animator.StringToHash("hit");
+    }
+
+    public static class CharacterAnimatorParameters
+    {
+        public static readonly int Death = Animator.StringToHash("death");
+        public static readonly int IsDeath = Animator.StringToHash("isDeath");
     }
 }

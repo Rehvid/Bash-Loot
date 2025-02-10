@@ -1,5 +1,6 @@
 ﻿namespace RehvidGames.Characters
 {
+    using Animator;
     using Interfaces;
     using UnityEngine;
 
@@ -15,6 +16,16 @@
         public virtual void TakeDamage(float damage)
         {
             characterStats.TakeDamage(damage);
+            if (IsDead())
+            {
+                Animator?.SetBool(CharacterAnimatorParameters.IsDeath, true);
+                Animator?.SetTrigger(CharacterAnimatorParameters.Death);
+            }
+            else
+            {
+                Animator?.SetTrigger(CombatAnimatorParameters.Hit);
+            }
+            
         }
 
         public virtual bool CanTakeDamage(float damage)
