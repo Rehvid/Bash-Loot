@@ -2,17 +2,22 @@
 {
     using Animator;
     using Enums;
+    using Player;
     using RehvidGames.States;
+    using UnityEngine;
 
     public class EnemyAttackState: BaseState<EnemyState>
     {
         private readonly Enemy enemy;
+        private readonly Player player;
         
         private AttackStateType attackStateType  = AttackStateType.Ready;
         
         public EnemyAttackState(Enemy enemy) : base(EnemyState.Attacking)
         {
             this.enemy = enemy;
+            
+            GameObject.FindGameObjectWithTag("Player").TryGetComponent(out player);
         }
 
         public override void EnterState()
@@ -22,12 +27,22 @@
 
         public override void FrameUpdate()
         {
-            if (attackStateType != AttackStateType.Attacking)
+            if (!IsReady()) return;
+            
+            if (IsPlayerDead())
             {
-                Attack();
+                enemy.StateMachine.SwitchState(EnemyState.Patrolling);
+                return;
             }
+            
+            Attack();
         }
 
+        private bool IsPlayerDead()
+        {
+            return player && player.IsDead();
+        }
+        
         private void Attack()
         {
             enemy.Animator.SetTrigger(CombatAnimatorParameters.Attack);
@@ -57,5 +72,7 @@
         }
 
         private void ResetAttackStateType() => attackStateType = AttackStateType.Ready;
+
+        private bool IsReady() => attackStateType == AttackStateType.Ready;
     }
 }
