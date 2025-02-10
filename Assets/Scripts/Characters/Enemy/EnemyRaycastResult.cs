@@ -1,5 +1,6 @@
 ﻿namespace RehvidGames.Characters.Enemy
 {
+    using Player;
     using UnityEngine;
 
     public struct EnemyRaycastResult
@@ -9,7 +10,15 @@
         
         public Vector2 HitPoint => Hit.point;
         
-        public bool IsPlayerDetected => Hit.collider != null && Hit.collider.CompareTag("Player");
+        public bool IsPlayerDetected
+        {
+            get
+            {
+                return Hit.collider != null 
+                       && Hit.collider.TryGetComponent(out Player player) 
+                       && !player.IsDead();
+            }
+        }
         
         public bool IsLayerDetected => DetectedLayer != 0;
         
@@ -18,5 +27,6 @@
             Hit = hit;
             DetectedLayer = hit.collider != null ? (LayerMask) hit.collider.gameObject.layer : 0;
         }
+        
     }
 }

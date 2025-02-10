@@ -37,7 +37,7 @@
         private void FixedUpdate()
         {
             DetectionResult = RaycastToPlayer();
-
+            
             if (DetectionResult.IsPlayerDetected)
             {
                 TryToSwitchChaseState();
@@ -45,8 +45,11 @@
             }
 
             if (!IsInState(EnemyState.Chasing)) return;
-            
-            SwitchToSearchState();
+
+            if (player && !player.IsDead())
+            {
+                SwitchToSearchState();
+            }
         }
 
         private void TryToSwitchChaseState()
@@ -59,11 +62,16 @@
 
         private void SwitchToSearchState()
         {
-            LastPlayerPosition = player.GetPosition();
+            LastPlayerPosition = GetPlayerPosition();
             SwitchState(EnemyState.Searching);
         }
         
-        private Vector2 GetDirectionToPlayer() => (player.GetPosition() - enemy.GetPosition()).normalized;
+        private Vector2 GetDirectionToPlayer() => (GetPlayerPosition() - enemy.GetPosition()).normalized;
+
+        private Vector2 GetPlayerPosition()
+        {
+            return !player ? Vector2.zero : player.GetPosition();
+        }
 
         private bool IsInState(EnemyState state)
         {
@@ -83,7 +91,7 @@
 
             return new EnemyRaycastResult(hit);
         }
-
+        
         
         private void OnDrawGizmos()
         {
