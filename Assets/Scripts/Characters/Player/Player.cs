@@ -49,7 +49,7 @@ namespace RehvidGames.Characters.Player
         #region Sprite Orientation
         public void TryUpdateSpriteDirectionHorizontally() => spriteOrientation.UpdateSpriteDirection(InputMovement);
         
-        public float GetIdleVelocityDirection() => spriteOrientation.IsFlippedHorizontally() ? -1f : 1f;
+        public float GetIdleVelocityDirection() => spriteOrientation.CurrentDirection == FacingDirection.Left ? -1f : 1f;
         #endregion
         
         #region Physics Controller
