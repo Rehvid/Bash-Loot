@@ -8,5 +8,6 @@
         RollEnd,
         DashEnd,
         BlockIdle,
+        Death,
     }
 }

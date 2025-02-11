@@ -17,6 +17,8 @@
         
         private void HandleStateChange(InputAction.CallbackContext context, PlayerState targetState)
         {
+            if (player.IsDead()) return;
+            
             if (IsContextPerformedAndIsNotInJumpState(context))
             {
                 player.StateMachine.SwitchState(targetState);
@@ -25,7 +27,7 @@
 
         private void HandleBlockState(InputAction.CallbackContext context)
         {
-            if (player.StateMachine.IsInState(PlayerState.Jump)) return; 
+            if (player.IsDead() || player.StateMachine.IsInState(PlayerState.Jump)) return; 
             
             if (context.performed)
             {

@@ -12,6 +12,14 @@ namespace RehvidGames.Characters.Player
         [field: SerializeField] public PlayerPhysicsController PhysicsController { get; private set;}
         [field: SerializeField] public PlayerStateMachine StateMachine { get; private set; }
         
+        public bool HasHitGround { get; private set; }
+ 
+        public void SetGroundImpact(bool state) => HasHitGround = state;
+        
+        protected override void HandleDeath()
+        {
+            StateMachine.SwitchState(PlayerState.Death);
+        }
 
         public override void TakeDamage(float damageTaken)
         {

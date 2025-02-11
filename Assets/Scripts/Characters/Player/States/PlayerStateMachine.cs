@@ -19,6 +19,7 @@
             states.Add(PlayerState.Dash, new PlayerDashState(player, movementData.DashForce, movementData.DashIdleForce));
             states.Add(PlayerState.Jump, new PlayerJumpState(player, movementData.JumpForce, movementData.FallSpeedMultiplier));
             states.Add(PlayerState.Block, new PlayerBlockState(player));
+            states.Add(PlayerState.Death, new PlayerDeathState(player));
             
             CurrentState = states[PlayerState.Idle];
         }

@@ -14,5 +14,10 @@
 
         [Header("Settings")]
         [SerializeField] private EnemyType enemyType;
+
+        protected override void HandleDeath()
+        {
+            
+        }
     }
 }

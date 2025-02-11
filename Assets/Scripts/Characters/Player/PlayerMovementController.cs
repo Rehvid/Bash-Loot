@@ -17,6 +17,8 @@
         
         private void FixedUpdate()
         {
+            if (player.IsDead()) return; 
+            
             if (CanApplyMovement()) 
             {
                 player.StateMachine.SwitchState(PlayerState.Walk);
@@ -53,9 +55,19 @@
             }
         }
 
-        public void OnMove(InputAction.CallbackContext context) => player.InputMovement = context.ReadValue<Vector2>();
-        
-        public void OnJump(InputAction.CallbackContext context) => isJumping = context.performed;
+        public void OnMove(InputAction.CallbackContext context)
+        {
+            if (player.IsDead()) return;
+            
+            player.InputMovement = context.ReadValue<Vector2>();
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (player.IsDead()) return;
+            
+            isJumping = context.performed;
+        }
 
         public void OnDash(InputAction.CallbackContext context)
         {
@@ -69,7 +81,8 @@
         {
             return context.performed
                    && onGround
-                   && !player.StateMachine.IsInState(PlayerState.Jump);
+                   && !player.StateMachine.IsInState(PlayerState.Jump)
+                   && !player.IsDead();
         }
         
     }

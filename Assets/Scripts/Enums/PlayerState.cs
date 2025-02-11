@@ -9,5 +9,6 @@
         Roll,
         Attack,
         Block,
+        Death
     }
 }
