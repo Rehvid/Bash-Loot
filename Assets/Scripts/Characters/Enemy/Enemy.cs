@@ -14,10 +14,10 @@
 
         [Header("Settings")]
         [SerializeField] private EnemyType enemyType;
-
+        
         protected override void HandleDeath()
         {
-            
+            StateMachine.SwitchState(EnemyState.Death);
         }
     }
 }

@@ -20,6 +20,7 @@
             states.Add(EnemyState.Searching, new EnemySearchState(enemy, sight, behaviorSettings, cooldownTimer));
             states.Add(EnemyState.Chasing, new EnemyChaseState(enemy));
             states.Add(EnemyState.Attacking, new EnemyAttackState(enemy));
+            states.Add(EnemyState.Death, new EnemyDeathState(enemy));
 
             CurrentState = states[EnemyState.Patrolling];
         }

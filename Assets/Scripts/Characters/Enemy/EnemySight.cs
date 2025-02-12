@@ -36,6 +36,8 @@
 
         private void FixedUpdate()
         {
+            if (enemy.IsDead()) return;
+            
             DetectionResult = RaycastToPlayer();
             
             if (DetectionResult.IsPlayerDetected)

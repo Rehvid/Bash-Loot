@@ -6,5 +6,6 @@
         Searching,
         Chasing,
         Attacking,
+        Death
     }
 }

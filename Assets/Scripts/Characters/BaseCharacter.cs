@@ -3,12 +3,12 @@
     using Animator;
     using Interfaces;
     using UnityEngine;
-    using UnityEngine.Events;
 
     public abstract class BaseCharacter: MonoBehaviour, IDamageable
     {
         [Header("Character components")]
         [field: SerializeField] public Animator Animator { get; protected set; }
+        [field: SerializeField] public Collider2D Collider { get; protected set; }
         [SerializeField] protected CharacterStats characterStats;
         
        
