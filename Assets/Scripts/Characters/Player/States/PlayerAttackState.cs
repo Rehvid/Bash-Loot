@@ -3,14 +3,17 @@
     using Animator;
     using Enums;
     using RehvidGames.States;
+    using Weapon;
 
     public class PlayerAttackState: BaseState<PlayerState>
     {
         private readonly Player player;
-
-        public PlayerAttackState(Player player) : base(PlayerState.Attack)
+        private readonly Weapon weapon;
+        
+        public PlayerAttackState(Player player, Weapon weapon) : base(PlayerState.Attack)
         {
             this.player = player;
+            this.weapon = weapon;
         }
         
         public override void EnterState()
@@ -26,9 +29,18 @@
 
         public override void AnimationTriggerEvent(AnimationTriggerType triggerType)
         {
-            if (triggerType != AnimationTriggerType.AttackEnd) return;
-
-            player.StateMachine.ResetToIdleIfInState(PlayerState.Attack);
+            switch (triggerType)
+            {
+                case AnimationTriggerType.AttackEnd:
+                    player.StateMachine.ResetToIdleIfInState(PlayerState.Attack);
+                    break;
+                case AnimationTriggerType.ActivateAttackCollider:
+                    weapon.ActivateAttackCollider();
+                    break;
+                case AnimationTriggerType.DeactivateAttackCollider:
+                    weapon.DeactivateAttackCollider();
+                    break;
+            }
         }
     }
 }
